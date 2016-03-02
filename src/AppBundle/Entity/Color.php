@@ -103,4 +103,10 @@ class Color
     {
         return $this->inventoryItems;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
 }

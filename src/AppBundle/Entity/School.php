@@ -104,4 +104,10 @@ class School
     {
         return $this->inventoryItems;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
 }

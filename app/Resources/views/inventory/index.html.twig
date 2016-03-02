@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Inventory list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Itemdescription</th>
+                <th>Itemlength</th>
+                <th>Itemwidth</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inventory in inventories %}
+            <tr>
+                <td><a href="{{ path('inv_show', { 'id': inventory.id }) }}">{{ inventory.id }}</a></td>
+                <td>{{ inventory.itemDescription }}</td>
+                <td>{{ inventory.itemLength }}</td>
+                <td>{{ inventory.itemWidth }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('inv_show', { 'id': inventory.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('inv_edit', { 'id': inventory.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('inv_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
