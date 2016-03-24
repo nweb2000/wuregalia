@@ -39,4 +39,5 @@ class LoginController extends Controller
                 'error'         => $error
             ));
     }
+
 }

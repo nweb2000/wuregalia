@@ -43,6 +43,11 @@ class User
     protected $email;
 
     /**
+     *@ORM\Column(type="string", nullable=false, unique=true, length=255)
+    */
+    protected $username;
+
+    /**
      *@ORM\Column(type="datetime", nullable=false)
      */
     protected $signup_date; //when the user first signs into the system
@@ -52,6 +57,7 @@ class User
     public function __construct()
     {
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->signup_date = new \DateTime(); //this defualts to using creation date as default
     }
 
     /**
@@ -187,5 +193,28 @@ class User
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 }
