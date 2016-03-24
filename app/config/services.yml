@@ -2,8 +2,18 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
+    #Ldap Parameters
+    host: "beaufort.winthrop.edu" #beaufort is student server for testing, use rahway for faculty
+    port: 636
+    version: 3
+    useSsl: true #this enables ldaps
+    useTls: false
+    optRef: false
 
 services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.ldap:
+        class: Symfony\Component\Ldap\LdapClient
+        arguments: ["%host%", "%port%", "%version%", "%useSsl%", "%useTls%", "%optRef%"]
