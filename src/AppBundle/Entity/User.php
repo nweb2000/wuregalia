@@ -23,6 +23,11 @@ class User
     protected $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="Inventory", mappedBy="user")
+     */
+    protected $inventoryItems;
+
+    /**
     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="userid")
     */
     protected $reservations; //reservations made by the user
@@ -187,5 +192,45 @@ class User
     public function getReservations()
     {
         return $this->reservations;
+    }
+
+
+
+    /**
+     * Add inventoryItem
+     *
+     * @param \AppBundle\Entity\Inventory $inventoryItem
+     * @return User
+     */
+    public function addInventoryItem(\AppBundle\Entity\Inventory $inventoryItem)
+    {
+        $this->inventoryItems[] = $inventoryItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove inventoryItem
+     *
+     * @param \AppBundle\Entity\Inventory $inventoryItem
+     */
+    public function removeInventoryItem(\AppBundle\Entity\Inventory $inventoryItem)
+    {
+        $this->inventoryItems->removeElement($inventoryItem);
+    }
+
+    /**
+     * Get InventoryItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInventoryItems()
+    {
+        return $this->inventoryItems;
+    }
+
+    public function __toString()
+    {
+        return $this->getFname()." ".$this->getLname();
     }
 }
