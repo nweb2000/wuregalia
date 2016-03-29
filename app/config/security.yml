@@ -4,8 +4,16 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+
+        ldap_users:
+            ldap:
+                service: app.ldap
+                #Once in production, need to add base_dn and search_dn for rahway
+                base_dn: cn=Users,dc=acc,dc=winthrop,dc=edu #for beaufort
+                search_dn: cn=visitor,cn=Users,dc=acc,dc=winthrop,dc=edu #for beaufort
+                search_password: winthrop
+                filter: (sAMAccountName={username})
+                default_roles: ROLE_USER
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,11 +22,23 @@ security:
             security: false
 
         main:
+            provider: ldap_users
             anonymous: ~
             # activate different ways to authenticate
 
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            form_login_ldap:
+                service: app.ldap
+                #dn_string: cn={username},ou=Generic Accounts,ou=Winthrop University,ou=Real Users,dc=win,dc=winthrop,dc=edu #for rahway
+                dn_string: cn={username},cn=Users,dc=acc,dc=winthrop,dc=edu #this is for beaufort
+                check_path: login
+                login_path: login
+                csrf_token_generator: security.csrf.token_manager
+
+    access_control:
+        - { path: ^/inv, roles: ROLE_USER } #testing
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, host: localhost$ } #REMOVE FOR PRODUCTION
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }  #force https for all urls
+

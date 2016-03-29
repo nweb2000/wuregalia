@@ -13,12 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  *@ORM\Entity
  *@ORM\Table(name="User")
  */
-class User 
+class User
 {
     /**
-     *@ORM\Column(type="integer", nullable=false)
-     *@ORM\Id
-     *@ORM\GeneratedValue
+     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue
      */
     protected $id;
 
@@ -28,29 +28,30 @@ class User
     protected $inventoryItems;
 
     /**
-    * @ORM\OneToMany(targetEntity="Reservation", mappedBy="userid")
-    */
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="userid")
+     */
     protected $reservations; //reservations made by the user
 
     /**
-     *@ORM\Column(type="string", nullable=false, length=255)
+     * @ORM\Column(type="string", nullable=false, length=255)
      */
     protected $fname;
 
     /**
-     *@ORM\Column(type="string", nullable=false, length=255)
+     * @ORM\Column(type="string", nullable=false, length=255)
      */
     protected $lname;
 
     /**
-     *@ORM\Column(type="string", nullable=false, unique=true, length=255)
+     * @ORM\Column(type="string", nullable=false, unique=true, length=255)
      */
     protected $email;
 
     /**
-     *@ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     protected $signup_date; //when the user first signs into the system
+
     /**
      * Constructor
      */
@@ -62,7 +63,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +86,7 @@ class User
     /**
      * Get fname
      *
-     * @return string 
+     * @return string
      */
     public function getFname()
     {
@@ -108,7 +109,7 @@ class User
     /**
      * Get lname
      *
-     * @return string 
+     * @return string
      */
     public function getLname()
     {
@@ -131,7 +132,7 @@ class User
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -154,7 +155,7 @@ class User
     /**
      * Get signup_date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getSignupDate()
     {
@@ -187,7 +188,7 @@ class User
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReservations()
     {
@@ -229,8 +230,4 @@ class User
         return $this->inventoryItems;
     }
 
-    public function __toString()
-    {
-        return $this->getFname()." ".$this->getLname();
-    }
 }
