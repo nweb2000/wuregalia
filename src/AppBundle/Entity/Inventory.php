@@ -69,7 +69,7 @@ class Inventory
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="inventoryItems")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 

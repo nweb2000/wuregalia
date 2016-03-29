@@ -33,5 +33,6 @@ monolog:
 
 swiftmailer:
     transport: gmail
-    username:  gmailUserName
-    password:  gmailPassword
+    username:  wuregalia
+    password:  winthropRegalia
+

@@ -1,7 +1,7 @@
 <?php
 /* ---------------------------------------------
     User Entity class
-    Holds data about user that is persited into 
+    Holds data about user that is persited into
     database via doctrine
 
     Author: Noah Weber
@@ -16,9 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     *@ORM\Column(type="integer", nullable=false)
+     *@ORM\Id
+     *@ORM\GeneratedValue
      */
     protected $id;
 
@@ -33,31 +33,36 @@ class User
     protected $reservations; //reservations made by the user
 
     /**
-     * @ORM\Column(type="string", nullable=false, length=255)
+     *@ORM\Column(type="string", nullable=false, length=255)
      */
     protected $fname;
 
     /**
-     * @ORM\Column(type="string", nullable=false, length=255)
+     *@ORM\Column(type="string", nullable=false, length=255)
      */
     protected $lname;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true, length=255)
+     *@ORM\Column(type="string", nullable=false, unique=true, length=255)
      */
     protected $email;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     *@ORM\Column(type="string", nullable=false, unique=true, length=255)
+     */
+    protected $username;
+
+    /**
+     *@ORM\Column(type="datetime", nullable=false)
      */
     protected $signup_date; //when the user first signs into the system
-
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->signup_date = new \DateTime(); //this defualts to using creation date as default
     }
 
     /**
@@ -194,9 +199,6 @@ class User
     {
         return $this->reservations;
     }
-
-
-
     /**
      * Add inventoryItem
      *
@@ -229,5 +231,31 @@ class User
     {
         return $this->inventoryItems;
     }
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
 }

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Special Request</h1>
+    <h3>Please fill out the form: </h3>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('homepage') }}">Homepage</a>
+        </li>
+    </ul>
+{% endblock %}

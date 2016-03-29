@@ -51,7 +51,7 @@ class specialRequestController extends Controller
             # The "Special Request" status has an id = 1;
             $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->find(1);
             $specialRequest->setItemStatus($Status);
-            $User = $this->getDoctrine()->getRepository('AppBundle:User')->find(1);
+            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
             $specialRequest->setUser($User);
             $em = $this->getDoctrine()->getManager();
             $em->persist($specialRequest);
@@ -59,11 +59,11 @@ class specialRequestController extends Controller
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('New Special Request Received')
-                ->setFrom('kashkarim2@gmail.com')
-                ->setTo('kashkarim2@gmail.com')
+                ->setFrom('wuregalia@gmail.com')
+                ->setTo('wuregalia@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        'emailsNotifications/adminNewSpecialRequest.txt.twig'
+                        'emailsNotifications/specialRequest/adminNewSpecialRequest.txt.twig'
                     ),
                     'text/html'
                 );
@@ -71,11 +71,11 @@ class specialRequestController extends Controller
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Special Request Received')
-                ->setFrom('kashkarim2@gmail.com')
-                ->setTo('kashkarim2@gmail.com')
+                ->setFrom('wuregalia@gmail.com')
+                ->setTo('wuregalia@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        'emailsNotifications/userSpecialRequestReceived.txt.twig'
+                        'emailsNotifications/specialRequest/userSpecialRequestReceived.txt.twig'
                     ),
                     'text/html'
                 );
@@ -99,6 +99,8 @@ class specialRequestController extends Controller
             'specialRequests' => $specialRequestsList
         ));
     }
+
+
     /**
      * @Route("/adminChangeStatus/{inventoryRequest}/{newStatus}", name="acceptSpecialRequest")
      */
@@ -112,11 +114,11 @@ class specialRequestController extends Controller
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Special Request Accepted')
-            ->setFrom('kashkarim2@gmail.com')
-            ->setTo('kashkarim2@gmail.com')
+            ->setFrom('wuregalia@gmail.com')
+            ->setTo('wuregalia@gmail.com')
             ->setBody(
                 $this->renderView(
-                    'emailsNotifications/userSpecialRequestAccepted.txt.twig'
+                    'emailsNotifications/specialRequest/userSpecialRequestAccepted.txt.twig'
                 ),
                 'text/html'
             );
@@ -140,11 +142,11 @@ class specialRequestController extends Controller
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Special Request Rejected')
-            ->setFrom('kashkarim2@gmail.com')
-            ->setTo('kashkarim2@gmail.com')
+            ->setFrom('wuregalia@gmail.com')
+            ->setTo('wuregalia@gmail.com')
             ->setBody(
                 $this->renderView(
-                    'emailsNotifications/userSpecialRequestRejected.txt.twig'
+                    'emailsNotifications/specialRequest/userSpecialRequestRejected.txt.twig'
                 ),
                 'text/html'
             );
