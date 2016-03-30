@@ -7,6 +7,14 @@ nav {
 	padding:15px 0 0 0;
 }
 
+#InputUsername {
+    color:#4b9cc9;
+}
+
+#InputPassword {
+	color:#4b9cc9;
+}
+
 ul {
 	list-style-type: none;
 }

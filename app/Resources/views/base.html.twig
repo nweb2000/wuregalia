@@ -28,18 +28,16 @@
 
           				{% if app.user %}
                             {# user is logged in (any and all users, regardless of ROLE_*) #}
-                            <p>Welcome {% app.user %}</p>
-                            <button type="button" class="btn btn-default">Lougout</button>
+                       {#     <p>Welcome {% app.user %}</p> #}
+                            <a href="/logout" type="button" class="btn btn-default">Logout</a>
                         {% elseif not app.user %}
                             {# user is not logged in (note the `not` in the `elseif` statement) #}
                             <!-- Login inputs -->
-                            {% if error %}
-                                <div class="lead">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
-              				<form class="form-inline col-xs-6 col-md-offset-1" action="{{ path('login') }}" method="post">
+                                <form class="form-inline col-xs-6 col-md-offset-1" action="{{ path('login') }}" method="post">
               				    <div class="form-group">
                                     <label for="username">Username:</label>
-                                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                                    {#<input type="text" id="username" name="_username" value="{{ last_username }}" />#}
+                                    <input type="text" id="username" name="_username"/>
                                 </div>
 
                                 <div class="form-group">
