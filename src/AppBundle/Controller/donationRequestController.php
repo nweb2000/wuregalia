@@ -21,15 +21,10 @@ use AppBundle\Entity\Status;
 
 
 
-/**
- * specialRequest controller.
- *
- * @Route("/donation_request")
- */
 class donationRequestController extends Controller
 {
     /**
-     * @Route("/", name="donationRequest")
+     * @Route("/donation_request", name="donationRequest")
      */
     public function indexAction(Request $request)
     {
@@ -89,7 +84,7 @@ class donationRequestController extends Controller
         ));
     }
     /**
-     * @Route("/admin", name="adminDonationRequest")
+     * @Route("/admin/donation_request", name="adminDonationRequest")
      */
     public function adminAction(Request $request)
     {
@@ -100,7 +95,7 @@ class donationRequestController extends Controller
         ));
     }
     /**
-     * @Route("/adminChangeStatus/{inventoryRequest}/{newStatus}", name="acceptDonationRequest")
+     * @Route("/admin/donation_request/status/{inventoryRequest}/{newStatus}", name="acceptDonationRequest")
      */
     public function adminChangeStatusAction(Request $request, $inventoryRequest,  $newStatus)
     {
@@ -129,7 +124,7 @@ class donationRequestController extends Controller
 
 
     /**
-     * @Route("/adminRejectSpecialRequest/{inventoryRequest}", name="rejectDonationRequest")
+     * @Route("/admin/donation_request/reject/{inventoryRequest}", name="rejectDonationRequest")
      */
     public function adminRejectSpecialRequestAction(Request $request,$inventoryRequest)
     {

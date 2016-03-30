@@ -44,7 +44,8 @@ security:
         ROLE_ADMIN: ROLE_USER
 
     access_control:
-        - { path: ^/inv, roles: ROLE_USER } #testing
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, host: localhost$ } #REMOVE FOR PRODUCTION
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }  #force https for all urls
-
+        #- { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, host: localhost$ } #REMOVE FOR PRODUCTION
+        #- { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }  #force https for all urls
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/special_request, roles: ROLE_USER } #add requires https after
+        - { path: ^/donation_request, roles: ROLE_USER }

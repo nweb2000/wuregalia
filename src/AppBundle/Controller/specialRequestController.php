@@ -20,16 +20,10 @@ use AppBundle\Entity\Status;
 
 
 
-
-/**
- * specialRequest controller.
- *
- * @Route("/special_request")
- */
 class specialRequestController extends Controller
 {
     /**
-     * @Route("/", name="specialRequest")
+     * @Route("/special_request", name="specialRequest")
      */
     public function indexAction(Request $request)
     {
@@ -89,12 +83,12 @@ class specialRequestController extends Controller
         ));
     }
     /**
-     * @Route("/admin", name="adminSpecialRequest")
+     * @Route("/admin/special_request", name="adminSpecialRequest")
      */
     public function adminAction(Request $request)
     {
         $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
-
+        dump($specialRequestsList);
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList
         ));
@@ -102,7 +96,7 @@ class specialRequestController extends Controller
 
 
     /**
-     * @Route("/adminChangeStatus/{inventoryRequest}/{newStatus}", name="acceptSpecialRequest")
+     * @Route("/admin/special_request/status/{inventoryRequest}/{newStatus}", name="acceptSpecialRequest")
      */
     public function adminChangeStatusAction(Request $request, $inventoryRequest,  $newStatus)
     {
@@ -131,7 +125,7 @@ class specialRequestController extends Controller
 
 
     /**
-     * @Route("/adminRejectSpecialRequest/{inventoryRequest}", name="rejectSpecialRequest")
+     * @Route("/admin/special_request/reject/{inventoryRequest}", name="rejectSpecialRequest")
      */
     public function adminRejectSpecialRequestAction(Request $request,$inventoryRequest)
     {

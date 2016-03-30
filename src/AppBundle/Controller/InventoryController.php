@@ -19,16 +19,14 @@ class InventoryController extends Controller
     /**
      * Lists all Inventory entities.
      *
-     * @Route("/", name="inv_index")
+     * @Route("/", name="inventory_index")
      * @Method("GET")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $inventories = $em->getRepository('AppBundle:Inventory')->findByArray(
-                                                array('Status' => 'Available')
-                                            );
+        $inventories = $em->getRepository('AppBundle:Inventory')->findAll();
 
         return $this->render('inventory/index.html.twig', array(
             'inventories' => $inventories,
@@ -38,7 +36,7 @@ class InventoryController extends Controller
     /**
      * Creates a new Inventory entity.
      *
-     * @Route("/new", name="inv_new")
+     * @Route("/new", name="inventory_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -52,7 +50,7 @@ class InventoryController extends Controller
             $em->persist($inventory);
             $em->flush();
 
-            return $this->redirectToRoute('inv_show', array('id' => $inventory->getId()));
+            return $this->redirectToRoute('inventory_show', array('id' => $inventory->getId()));
         }
 
         return $this->render('inventory/new.html.twig', array(
@@ -64,7 +62,7 @@ class InventoryController extends Controller
     /**
      * Finds and displays a Inventory entity.
      *
-     * @Route("/{id}", name="inv_show")
+     * @Route("/{id}", name="inventory_show")
      * @Method("GET")
      */
     public function showAction(Inventory $inventory)
@@ -80,7 +78,7 @@ class InventoryController extends Controller
     /**
      * Displays a form to edit an existing Inventory entity.
      *
-     * @Route("/{id}/edit", name="inv_edit")
+     * @Route("/{id}/edit", name="inventory_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Inventory $inventory)
@@ -94,7 +92,7 @@ class InventoryController extends Controller
             $em->persist($inventory);
             $em->flush();
 
-            return $this->redirectToRoute('inv_edit', array('id' => $inventory->getId()));
+            return $this->redirectToRoute('inventory_edit', array('id' => $inventory->getId()));
         }
 
         return $this->render('inventory/edit.html.twig', array(
@@ -107,7 +105,7 @@ class InventoryController extends Controller
     /**
      * Deletes a Inventory entity.
      *
-     * @Route("/{id}", name="inv_delete")
+     * @Route("/{id}", name="inventory_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Inventory $inventory)
@@ -121,7 +119,7 @@ class InventoryController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('inv_index');
+        return $this->redirectToRoute('inventory_index');
     }
 
     /**
@@ -134,7 +132,7 @@ class InventoryController extends Controller
     private function createDeleteForm(Inventory $inventory)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('inv_delete', array('id' => $inventory->getId())))
+            ->setAction($this->generateUrl('inventory_delete', array('id' => $inventory->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
