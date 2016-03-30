@@ -1,7 +1,7 @@
 <?php
 /* ---------------------------------------------
     User Entity class
-    Holds data about user that is persited into 
+    Holds data about user that is persited into
     database via doctrine
 
     Author: Noah Weber
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  *@ORM\Entity
  *@ORM\Table(name="User")
  */
-class User 
+class User
 {
     /**
      *@ORM\Column(type="integer", nullable=false)
@@ -23,8 +23,13 @@ class User
     protected $id;
 
     /**
-    * @ORM\OneToMany(targetEntity="Reservation", mappedBy="userid")
-    */
+     * @ORM\OneToMany(targetEntity="Inventory", mappedBy="user")
+     */
+    protected $inventoryItems;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="userid")
+     */
     protected $reservations; //reservations made by the user
 
     /**
@@ -44,7 +49,7 @@ class User
 
     /**
      *@ORM\Column(type="string", nullable=false, unique=true, length=255)
-    */
+     */
     protected $username;
 
     /**
@@ -63,7 +68,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -86,7 +91,7 @@ class User
     /**
      * Get fname
      *
-     * @return string 
+     * @return string
      */
     public function getFname()
     {
@@ -109,7 +114,7 @@ class User
     /**
      * Get lname
      *
-     * @return string 
+     * @return string
      */
     public function getLname()
     {
@@ -132,7 +137,7 @@ class User
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -155,7 +160,7 @@ class User
     /**
      * Get signup_date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getSignupDate()
     {
@@ -188,13 +193,44 @@ class User
     /**
      * Get reservations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReservations()
     {
         return $this->reservations;
     }
+    /**
+     * Add inventoryItem
+     *
+     * @param \AppBundle\Entity\Inventory $inventoryItem
+     * @return User
+     */
+    public function addInventoryItem(\AppBundle\Entity\Inventory $inventoryItem)
+    {
+        $this->inventoryItems[] = $inventoryItem;
 
+        return $this;
+    }
+
+    /**
+     * Remove inventoryItem
+     *
+     * @param \AppBundle\Entity\Inventory $inventoryItem
+     */
+    public function removeInventoryItem(\AppBundle\Entity\Inventory $inventoryItem)
+    {
+        $this->inventoryItems->removeElement($inventoryItem);
+    }
+
+    /**
+     * Get InventoryItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInventoryItems()
+    {
+        return $this->inventoryItems;
+    }
     /**
      * Set username
      *
@@ -211,10 +247,15 @@ class User
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
         return $this->username;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 }

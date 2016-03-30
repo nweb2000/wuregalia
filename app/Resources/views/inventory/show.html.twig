@@ -1,40 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Inventory</h1>
+    {#<h1>Inventory</h1>#}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ inventory.id }}</td>
-            </tr>
-            <tr>
-                <th>Itemdescription</th>
-                <td>{{ inventory.itemDescription }}</td>
-            </tr>
-            <tr>
-                <th>Itemlength</th>
-                <td>{{ inventory.itemLength }}</td>
-            </tr>
-            <tr>
-                <th>Itemwidth</th>
-                <td>{{ inventory.itemWidth }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <div class="card">
+          <img class="card-img-top" data-src="..." alt="Card image cap">
+          <div class="card-block">
+            <h4 class="card-title">{{ inventory.itemType }}</h4>
+            <p class="card-text">{{ inventory.itemDescription }}</p>
+            <a href="{{ path('inv_edit', { 'id': inventory.id }) }}">Edit</a>#}
+          </div>
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('inv_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('inv_edit', { 'id': inventory.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {#<table>#}
+    {#    <tbody>#}
+    {#        <tr>#}
+    {#            <th>Id</th>#}
+    {#            <td>{{ inventory.id }}</td>#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            <th>Itemdescription</th>#}
+    {#            <td>{{ inventory.itemDescription }}</td>#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            <th>Itemlength</th>#}
+    {#            <td>{{ inventory.itemLength }}</td>#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            <th>Itemwidth</th>#}
+    {#            <td>{{ inventory.itemWidth }}</td>#}
+    {#        </tr>#}
+    {#    </tbody>#}
+    {#</table>#}
+
+    {#<ul>#}
+    {#    <li>#}
+    {#        <a href="{{ path('inv_index') }}">Back to the list</a>#}
+    {#    </li>#}
+    {#    <li>#}
+    {#        <a href="{{ path('inv_edit', { 'id': inventory.id }) }}">Edit</a>#}
+    {#    </li>#}
+    {#    <li>#}
+    {#        {{ form_start(delete_form) }}#}
+    {#            <input type="submit" value="Delete">#}
+    {#        {{ form_end(delete_form) }}#}
+    {#    </li>#}
+    {#</ul>#}
 {% endblock %}

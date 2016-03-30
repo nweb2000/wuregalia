@@ -68,6 +68,12 @@ class Inventory
     protected $itemWidth;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="inventoryItems")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    protected $user;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -260,4 +266,28 @@ class Inventory
     {
         return $this->itemMajor;
     }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return Inventory
+     */
+    public function setUser(\AppBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
 }

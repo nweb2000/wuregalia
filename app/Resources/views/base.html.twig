@@ -2,12 +2,86 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}WU Regalia{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('Css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('Css/bootstrap-theme.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('Css/style.css')}}">
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+            <header>
+                {# Navigation starts here #}
+
+                <div class="row">
+  			        <nav class="col-xs-">
+      				    <ul class="col-xs-5">
+          					<!-- Page links -->
+          					<a href="index.html"><li id="Homepage">Regalia Closet</li></a>
+          					<a href="rent.html"><li>Rent</li></a>
+          					<a href="donate.html"><li>Donate</li></a>
+          					<a href="request.html"><li>Request</li></a>
+          					<!-- Page links end -->
+          				</ul>
+
+
+          				{% if app.user %}
+                            {# user is logged in (any and all users, regardless of ROLE_*) #}
+                            <p>Welcome {% app.user %}</p>
+                            <button type="button" class="btn btn-default">Lougout</button>
+                        {% elseif not app.user %}
+                            {# user is not logged in (note the `not` in the `elseif` statement) #}
+                            <!-- Login inputs -->
+                            {% if error %}
+                                <div class="lead">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+              				<form class="form-inline col-xs-6 col-md-offset-1" action="{{ path('login') }}" method="post">
+              				    <div class="form-group">
+                                    <label for="username">Username:</label>
+                                    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password:</label>
+                                    <input type="password" id="password" name="_password" />
+                                </div>
+
+                                {#
+                                    If you want to control the URL the user
+                                    is redirected to on success (more details below)
+                                    <input type="hidden" name="_target_path" value="/" />
+                                #}
+
+                                <div class="form-group" id="PasswordField">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <button type="submit">login</button>
+                                </div>
+                            </form>
+              				<!-- Login inputs end -->
+          				{% endif %}
+  			        </nav>
+  		        </div>
+
+                {# Navigation ends here #}
+            </header>
+        {% block body%}{% endblock %}
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <script src="{{ asset('Js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+
+        <!-- Footer starts here -->
+            <div class="row">
+    			<div class="col-xs-">
+    				<footer>
+    					<div id="FooterContent" class="text-center">
+    						<h4>Need Help?</h4>
+    						<p><strong>Call</strong>: 803-999-9999 or <strong>Email</strong>: example@winthrop.edu</p>
+    					</div>
+    				</footer>
+    			</div>
+    		</div>
+    	<!-- Footer ends here -->
     </body>
 </html>

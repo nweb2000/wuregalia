@@ -1,0 +1,13 @@
+.jumbotron{
+        background: url("https://cdn.elegantthemes.com/blog/wp-content/uploads/2013/09/bg-7-full.jpg") center center;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        overflow: hidden;
+        color: white;
+    }
+
+.search-icon{
+        border-color: transparent;
+        background-color: transparent;
+}

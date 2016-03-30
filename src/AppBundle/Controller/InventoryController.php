@@ -26,7 +26,9 @@ class InventoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $inventories = $em->getRepository('AppBundle:Inventory')->findAll();
+        $inventories = $em->getRepository('AppBundle:Inventory')->findByArray(
+                                                array('Status' => 'Available')
+                                            );
 
         return $this->render('inventory/index.html.twig', array(
             'inventories' => $inventories,
