@@ -15,9 +15,22 @@ use AppBundle\Entity\Inventory;
       */
      public function indexAction(Request $request)
      {
+         //getting the entity manganer as $em
          $em = $this->getDoctrine()->getManager();
 
-        $inventories = $em->getRepository('AppBundle:Inventory')->findAll();
+        //$inventories = $em->getRepository('AppBundle:Inventory')->find();
+
+        $inventories = $em->getRepository('AppBundle:Inventory');
+        //Query builder
+        $query = $inventories->createQueryBuilder('i')
+            ->where('i.status_id = :status')
+            ->setParameter('status', '1')
+            ->getQuery();
+
+        // $inventories = $em->getRepository('AppBundle:Inventory')
+        //     ->findAll();
+
+        // $itemStatusName = $inventories->getItemStatus()->getName();
 
         return $this->render('default/index.html.twig', array(
             'inventories' => $inventories,

@@ -2,17 +2,7 @@
 
 nav {
 	background-color: #4b9cc9;
-	color:#f2f2f2;
-	height:70px;
-	padding:15px 0 0 0;
-}
-
-#InputUsername {
-    color:#4b9cc9;
-}
-
-#InputPassword {
-	color:#4b9cc9;
+	/*color:#f2f2f2;*/
 }
 
 ul {
@@ -20,22 +10,18 @@ ul {
 }
 
 
-#Homepage {
-	font-size: 25px;
-}
-
 
 li {
 	display:inline;
 	font-size: 20px;
-	margin: 0 0 0 20px;
+	/*margin: 0 0 0 20px;*/
 }
 
 a {
 	text-decoration: none;
 	color:#f2f2f2;
 	transition: .3s;
-}	
+}
 
 a:hover #Homepage {
 	color:#f2f2f2;
@@ -46,20 +32,19 @@ a:hover {
 }
 
 #Heading {
-	color:#0071BC
+	/*color:#0071BC*/
 }
 
 #PasswordField {
-	padding: 0 0 0 5px;
+	/*padding: 0 0 0 5px;*/
 }
 
-footer {
-	background-color: #4b9cc9;
-	color:#f2f2f2;
-	height:100px;
-	margin: 200px 0 0 0;
-	padding: 16px 0 0 0;
-}
+/*footer {*/
+/*	background-color: #4b9cc9;*/
+/*	color:#f2f2f2;*/
+	/*margin: 200px 0 0 0;*/
+	/*padding: 16px 0 0 0;*/
+/*}*/
 
 #ContentColumns {
 	margin:20px 0 0 0;
