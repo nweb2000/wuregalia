@@ -12,7 +12,7 @@ use AppBundle\Form\UserType;
 /**
  * User controller.
  *
- * @Route("/user", name="user")
+ * @Route("/user")
  */
 class UserController extends Controller
 {

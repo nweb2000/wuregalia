@@ -31,10 +31,10 @@
                   				{% if app.user %}
                                     {# user is logged in (any and all users, regardless of ROLE_*) #}
                                     {#<p>Welcom {{ app.user.username }}</p>#}
-                                    <a class="navbar-link navbar-left" href="{{ path('user') }}">
+                                    <a class="navbar-link navbar-left" href="{{ path('user_index') }}">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                         {{ app.user.username }}
-                                    </a>
+                                    </a> 
                                     <a href="/logout" type="button" class="btn btn-default">Logout</a>
                                 {% elseif not app.user %}
                                     {# user is not logged in (note the `not` in the `elseif` statement) #}
