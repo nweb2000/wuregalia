@@ -2,20 +2,25 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\Inventory;
 
-class DefaultController extends Controller
-{
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function indexAction(Request $request)
-    {
-        // replace this example code with whatever you need
+ class DefaultController extends Controller
+ {
+     /**
+      * @Route("/", name="homepage")
+      */
+     public function indexAction(Request $request)
+     {
+         $em = $this->getDoctrine()->getManager();
+
+        $inventories = $em->getRepository('AppBundle:Inventory')->findAll();
+
         return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+            'inventories' => $inventories,
         ));
-    }
-}
+     }
+ }
