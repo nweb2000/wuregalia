@@ -6,7 +6,7 @@ parameters:
     host: "beaufort.winthrop.edu" #beaufort is student server for testing, use rahway for faculty
     port: 636
     version: 3
-    useSsl: true #this enables ldaps
+    useSsl: true #this enables ldaps VERY IMPORTANT THAT THIS IS TRUE
     useTls: false
     optRef: false
 

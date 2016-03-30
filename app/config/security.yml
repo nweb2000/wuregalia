@@ -28,6 +28,9 @@ security:
 
             # http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+            logout:
+                path: /logout
+                target: /
 
             form_login_ldap:
                 service: app.ldap
@@ -36,6 +39,9 @@ security:
                 check_path: login
                 login_path: login
                 csrf_token_generator: security.csrf.token_manager
+
+    role_hieracrchy:
+        ROLE_ADMIN: ROLE_USER
 
     access_control:
         - { path: ^/inv, roles: ROLE_USER } #testing
