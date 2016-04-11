@@ -23,6 +23,7 @@ class InventoryType extends AbstractType
             ->add('itemColor')
             ->add('itemSchool')
             ->add('itemMajor')
+            ->add('user')
         ;
     }
     

@@ -1,57 +1,43 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    {#<h1>Inventory list</h1>#}
+    <h1>Inventory list</h1>
 
-    <div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Itemdescription</th>
+                <th>Itemlength</th>
+                <th>Itemwidth</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
         {% for inventory in inventories %}
-            <div class="card">
-              <img class="card-img-top" src="http://www.gradshop.com/media/catalog/product/cache/1/small_image/270x/9df78eab33525d08d6e5fb8d27136e95/r/e/red_1_31.jpg" alt="Card image cap">
-              <div class="card-block">
-                <h4 class="card-title">{{ inventory.itemType }}</h4>
-                <p class="card-text">{{ inventory.itemDescription }}</p>
-                <a class="btn btn-primary" role="button" href="{{ path('inv_show', { 'id': inventory.id }) }}">View</a>
-              </div>
-            </div>
+            <tr>
+                <td><a href="{{ path('inventory_show', { 'id': inventory.id }) }}">{{ inventory.id }}</a></td>
+                <td>{{ inventory.itemDescription }}</td>
+                <td>{{ inventory.itemLength }}</td>
+                <td>{{ inventory.itemWidth }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('inventory_show', { 'id': inventory.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('inventory_edit', { 'id': inventory.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
         {% endfor %}
-    </div>
+        </tbody>
+    </table>
 
-    {#<table>#}
-    {#    <thead>#}
-    {#        <tr>#}
-    {#            <th>Id</th>#}
-    {#            <th>Itemdescription</th>#}
-    {#            <th>Itemlength</th>#}
-    {#            <th>Itemwidth</th>#}
-    {#            <th>Actions</th>#}
-    {#        </tr>#}
-    {#    </thead>#}
-    {#    <tbody>#}
-    {#    {% for inventory in inventories %}#}
-    {#        <tr>#}
-    {#            <td><a href="{{ path('inv_show', { 'id': inventory.id }) }}">{{ inventory.id }}</a></td>#}
-    {#            <td>{{ inventory.itemDescription }}</td>#}
-    {#            <td>{{ inventory.itemLength }}</td>#}
-    {#            <td>{{ inventory.itemWidth }}</td>#}
-    {#            <td>#}
-    {#                <ul>#}
-    {#                    <li>#}
-    {#                        <a href="{{ path('inv_show', { 'id': inventory.id }) }}">show</a>#}
-    {#                    </li>#}
-    {#                    <li>#}
-    {#                        <a href="{{ path('inv_edit', { 'id': inventory.id }) }}">edit</a>#}
-    {#                    </li>#}
-    {#                </ul>#}
-    {#            </td>#}
-    {#        </tr>#}
-    {#    {% endfor %}#}
-    {#    </tbody>#}
-    {#</table>#}
-
-    {#<ul>#}
-    {#    <li>#}
-    {#        <a href="{{ path('inv_new') }}">Create a new entry</a>#}
-    {#    </li>#}
-    {#</ul>#}
+    <ul>
+        <li>
+            <a href="{{ path('inventory_new') }}">Create a new entry</a>
+        </li>
+    </ul>
 {% endblock %}

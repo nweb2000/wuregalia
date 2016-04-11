@@ -10,7 +10,9 @@
                 <th>Fname</th>
                 <th>Lname</th>
                 <th>Email</th>
+                <th>Username</th>
                 <th>Signup_date</th>
+                <th>Adminpriv</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -21,7 +23,9 @@
                 <td>{{ user.fname }}</td>
                 <td>{{ user.lname }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ user.username }}</td>
                 <td>{% if user.signupdate %}{{ user.signupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ user.adminpriv }}</td>
                 <td>
                     <ul>
                         <li>

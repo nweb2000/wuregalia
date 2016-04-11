@@ -22,8 +22,16 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
                 <th>Signup_date</th>
                 <td>{% if user.signupdate %}{{ user.signupdate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Adminpriv</th>
+                <td>{{ user.adminpriv }}</td>
             </tr>
         </tbody>
     </table>

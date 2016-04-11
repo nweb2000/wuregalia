@@ -56,14 +56,40 @@ class User
      *@ORM\Column(type="datetime", nullable=false)
      */
     protected $signup_date; //when the user first signs into the system
+
+    /**
+     *@ORM\Column(type="integer", nullable=false)
+     */
+    
+    //IMPORTANT: Also check if a person is an admin through isAdmin()
+    protected $adminpriv;  //always access this through isAdmin() function, change to true with grantAdmin()
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->adminpriv = 0; //Anything that is not a 1 value will return false in the isAdmin() function 
         $this->signup_date = new \DateTime(); //this defualts to using creation date as default
     }
+
+    //Returns true if user is admin (if adminpriv is set to 1)
+    public function isAdmin()
+    {   
+        return $this->adminpriv==1 ? true : false;
+    }
+
+    public function grantAdminPriv()
+    {
+        $this->adminpriv = 1;
+    }
+
+    public function revokeAdminPriv()
+    {
+        $this->adminpriv = 0;
+    }
+
 
     /**
      * Get id
@@ -87,6 +113,20 @@ class User
 
         return $this;
     }
+
+    //These methods are only needed seemingly for twig (?!)
+    public function getAdminpriv()
+    {
+        return $this->adminpriv;
+    }
+
+    public function setAdminpriv($adminpriv)
+    {
+        $this->adminpriv= $adminpriv;
+
+        return $this;
+    }
+
 
     /**
      * Get fname

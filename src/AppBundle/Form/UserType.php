@@ -18,7 +18,9 @@ class UserType extends AbstractType
             ->add('fname')
             ->add('lname')
             ->add('email')
+            ->add('username')
             ->add('signup_date', 'datetime')
+            ->add('adminpriv')
         ;
     }
     

@@ -2,6 +2,22 @@
 
 {% block body %}
 
-    
+<div class="row">
+    {% for inventory in inventories %}
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="..." alt="...">
+          <div class="caption">
+            <h3>{{ inventory.itemType }}</h3>
+            <p>{{ inventory.itemDescription }}</p>
+            <p>
+                <a href="{{ path('inventory_show', { 'id': inventory.id }) }}" class="btn btn-primary" role="button">View</a>
+                <a href="" class="btn btn-default" role="button">Rent</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</div>
 
 {% endblock %}
