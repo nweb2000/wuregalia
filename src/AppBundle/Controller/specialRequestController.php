@@ -94,7 +94,6 @@ class specialRequestController extends Controller
     public function adminAction(Request $request)
     {
         $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
-
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList
         ));
