@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>You have rented the item</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Itemdescription</th>
+                <td>{{ item.itemDescription }}</td>
+            </tr>
+            <tr>
+                <th>Itemlength</th>
+                <td>{{ item.itemLength }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ item.itemStatus}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('rent_show') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
