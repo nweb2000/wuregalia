@@ -49,6 +49,18 @@ class Reservation
      */
     protected $approved; //whether or not the reservation has been approved by admin
 
+    //Pass in a Entity/User and Entity/Inventory types as parameters
+    public function __construct($user, $item)
+    {
+        $this->createDate = new \DateTime(); //this defualts to using creation date as default
+        dump($this->createDate);
+        $this->dueDate= new \DateTime();  //NEED TO SET THIS SO THAT IT DEFUALTS TO CREATE DATA + RENTAL TIME
+        $this->approved = false;
+        $this->userid = $user;
+        $this->item = $item;
+    }
+
+
 
     /**
      * Get id

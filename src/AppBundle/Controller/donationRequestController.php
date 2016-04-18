@@ -7,6 +7,7 @@
  */
 namespace AppBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,13 +32,13 @@ class donationRequestController extends Controller
         $donationRequest = new Inventory();
 
         $form = $this->createFormBuilder($donationRequest)
-            ->add('itemDescription', TextType::class)
-            ->add('itemLength', IntegerType::class)
-            ->add('itemWidth', IntegerType::class)
             ->add('itemType')
             ->add('itemColor')
             ->add('itemSchool')
             ->add('itemMajor')
+            ->add('itemLength', TextType::class)
+            ->add('itemWidth', TextType::class)
+            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '80', 'rows' => '5'), ))
             ->add('save', SubmitType::class, array('label' => 'Submit your donation request'))
             ->getForm();
         $form->handleRequest($request);
@@ -46,31 +47,33 @@ class donationRequestController extends Controller
             # The "donation Request" status has an id = 4;
             $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->find(4);
             $donationRequest->setItemStatus($Status);
-            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
+            #$User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
+            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => 'kashkarim2'));
+
             $donationRequest->setUser($User);
             $em = $this->getDoctrine()->getManager();
             $em->persist($donationRequest);
             $em->flush();
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('New Donation Request Received')
+                ->setSubject('New Donation Request Submitted to WU Regalia Closet')
                 ->setFrom('wuregalia@gmail.com')
                 ->setTo('wuregalia@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        'emailsNotifications/donationRequest/adminNewDonationRequest.txt.twig'
+                        'emailsNotifications/donationRequest/adminNewDonationRequest.txt.twig',array('donationRequest' => $donationRequest)
                     ),
                     'text/html'
                 );
             $this->get('mailer')->send($message);
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Donation Request Received')
+                ->setSubject('Donation Request Confirmation')
                 ->setFrom('wuregalia@gmail.com')
                 ->setTo('wuregalia@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        'emailsNotifications/donationRequest/userDonationRequestReceived.txt.twig'
+                        'emailsNotifications/donationRequest/userDonationRequestReceived.txt.twig', array('donationRequest' => $donationRequest)
                     ),
                     'text/html'
                 );
@@ -111,7 +114,7 @@ class donationRequestController extends Controller
             ->setTo('wuregalia@gmail.com')
             ->setBody(
                 $this->renderView(
-                    'emailsNotifications/donationRequest/userDonationRequestAccepted.txt.twig'
+                    'emailsNotifications/donationRequest/userDonationRequestAccepted.txt.twig', array('donationRequest' => $record)
                 ),
                 'text/html'
             );
@@ -139,7 +142,7 @@ class donationRequestController extends Controller
             ->setTo('wuregalia@gmail.com')
             ->setBody(
                 $this->renderView(
-                    'emailsNotifications/donationRequest/userDonationRequestRejected.txt.twig'
+                    'emailsNotifications/donationRequest/userDonationRequestRejected.txt.twig', array('donationRequest' => $record)
                 ),
                 'text/html'
             );

@@ -1,5 +1,56 @@
 <h3> Donation Request Received </h3>
 
-A new Donation Request has been submitted.
+<table>
+    <tr>
+        <td> Request id : </td>
+        <td> {{ donationRequest.id }} </td>
+    </tr>
+    <tr>
+        <td> Username : </td>
+        <td> {{ donationRequest.user }} </td>
+    </tr>
+    <tr>
+        <td> Name : </td>
+        <td> {{ donationRequest.user.fname }} {{  donationRequest.user.lname }} </td>
+    </tr>
+    <tr>
+        <td> User Email : </td>
+        <td> {{ donationRequest.user.email }} </td>
+    </tr>
+    <tr>
+        <td> Current Status: </td>
+        <td>  {{ donationRequest.itemStatus }}  </td>
+    </tr>
+    <tr>
+        <td> Type: </td>
+        <td>  {{ donationRequest.itemType }}  </td>
+    </tr>
+    <tr>
+        <td> Color :  </td>
+        <td>  {{donationRequest.itemColor }}  </td>
+    </tr>
+    <tr>
+        <td> School :  </td>
+        <td>  {{ donationRequest.itemSchool }}  </td>
+    </tr>
+    <tr>
+        <td> Major </td>
+        <td>  {{ donationRequest.itemMajor }}  </td>
+    </tr>
+    <tr>
+        <td> Length : </td>
+        <td>  {{ donationRequest.itemLength }}  </td>
+    </tr>
+    <tr>
+        <td> Width : </td>
+        <td>  {{ donationRequest.itemWidth }}  </td>
+    </tr>
+    <tr>
+        <td> Description : </td>
+    </tr>
+    </table>
+    {{ donationRequest.itemDescription }}
 
-Thank you for using WU Regalia Closet.
+
+<br><br>
+<a href="{{ path('homepage') }}">WU regalia Closet</a>
