@@ -8,6 +8,7 @@
 ------------------------------------------------ */
 namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *@ORM\Entity
@@ -53,17 +54,24 @@ class Inventory
     protected $itemMajor; //what discipline the item is associated with
 
     /**
-     *@ORM\Column(type="string", nullable=false, length=500)
+     * @ORM\Column(type="string", nullable=false, length=500)
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      max = 500,
+     *      maxMessage = "Please use less than 500 characters"
+     *      )
      */
     protected $itemDescription; 
 
     /**
-     *@ORM\Column(type="integer")
+     * @ORM\Column(type="integer")
+     * @Assert\Regex("/^\d+$/")
      */
     protected $itemLength;
 
     /**
-     *@ORM\Column(type="integer")
+     * @ORM\Column(type="integer")
+     * @Assert\Regex("/^\d+$/")
      */
     protected $itemWidth;
 

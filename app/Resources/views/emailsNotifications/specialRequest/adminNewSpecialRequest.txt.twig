@@ -1,5 +1,55 @@
 <h3> Special Request Received </h3>
 
-A new Special Request has been submitted.
+<table>
+    <tr>
+        <td> Request id : </td>
+        <td> {{ specialRequest.id }} </td>
+    </tr>
+    <tr>
+        <td> Username : </td>
+        <td> {{ specialRequest.user }} </td>
+    </tr>
+    <tr>
+        <td> Name : </td>
+        <td> {{ specialRequest.user.fname }} {{  specialRequest.user.lname }} </td>
+    </tr>
+    <tr>
+        <td> User Email : </td>
+        <td> {{ specialRequest.user.email }} </td>
+    </tr>
+    <tr>
+        <td> Current Status: </td>
+        <td>  {{ specialRequest.itemStatus }}  </td>
+    </tr>
+    <tr>
+        <td> Type: </td>
+        <td>  {{ specialRequest.itemType }}  </td>
+    </tr>
+    <tr>
+        <td> Color :  </td>
+        <td>  {{specialRequest.itemColor }}  </td>
+    </tr>
+    <tr>
+        <td> School :  </td>
+        <td>  {{ specialRequest.itemSchool }}  </td>
+    </tr>
+    <tr>
+        <td> Major </td>
+        <td>  {{ specialRequest.itemMajor }}  </td>
+    </tr>
+    <tr>
+        <td> Length : </td>
+        <td>  {{ specialRequest.itemLength }}  </td>
+    </tr>
+    <tr>
+        <td> Width : </td>
+        <td>  {{ specialRequest.itemWidth }}  </td>
+    </tr>
+    <tr>
+        <td> Description : </td>
+    </tr>
+    </table>
+    {{ specialRequest.itemDescription }}
 
-Thank you for using WU Regalia Closet.
+<br><br>
+<a href="{{ path('homepage') }}">WU regalia Closet</a>

@@ -7,6 +7,8 @@
  */
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,14 +32,14 @@ class specialRequestController extends Controller
         $specialRequest = new Inventory();
 
         $form = $this->createFormBuilder($specialRequest)
-            ->add('itemDescription', TextType::class)
-            ->add('itemLength', IntegerType::class)
-            ->add('itemWidth', IntegerType::class)
             ->add('itemType')
             ->add('itemColor')
             ->add('itemSchool')
             ->add('itemMajor')
-            ->add('save', SubmitType::class, array('label' => 'Submit your special request'))
+            ->add('itemLength', TextType::class)
+            ->add('itemWidth', TextType::class)
+            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '80', 'rows' => '5','placeholder' => ''), ))
+            ->add('save', SubmitType::class, array('label' => 'Submit your donation request'))
             ->getForm();
         $form->handleRequest($request);
 
@@ -45,31 +47,32 @@ class specialRequestController extends Controller
             # The "Special Request" status has an id = 1;
             $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->find(1);
             $specialRequest->setItemStatus($Status);
-            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
+            #$User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
+            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => 'kashkarim2'));
             $specialRequest->setUser($User);
             $em = $this->getDoctrine()->getManager();
             $em->persist($specialRequest);
             $em->flush();
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('New Special Request Received')
+                ->setSubject('New Special Request Submitted to WU Regalia Closet')
                 ->setFrom('wuregalia@gmail.com')
                 ->setTo('wuregalia@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        'emailsNotifications/specialRequest/adminNewSpecialRequest.txt.twig'
+                        'emailsNotifications/specialRequest/adminNewSpecialRequest.txt.twig', array('specialRequest' => $specialRequest)
                     ),
                     'text/html'
                 );
             $this->get('mailer')->send($message);
 
             $message = \Swift_Message::newInstance()
-                ->setSubject('Special Request Received')
+                ->setSubject('Special Request Confirmation')
                 ->setFrom('wuregalia@gmail.com')
                 ->setTo('wuregalia@gmail.com')
                 ->setBody(
                     $this->renderView(
-                        'emailsNotifications/specialRequest/userSpecialRequestReceived.txt.twig'
+                        'emailsNotifications/specialRequest/userSpecialRequestReceived.txt.twig', array('specialRequest' => $specialRequest)
                     ),
                     'text/html'
                 );
@@ -79,7 +82,7 @@ class specialRequestController extends Controller
         }
 
         return $this->render('specialRequest/new.html.twig', array(
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
     /**
@@ -88,7 +91,6 @@ class specialRequestController extends Controller
     public function adminAction(Request $request)
     {
         $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
-        dump($specialRequestsList);
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList
         ));
@@ -112,7 +114,7 @@ class specialRequestController extends Controller
             ->setTo('wuregalia@gmail.com')
             ->setBody(
                 $this->renderView(
-                    'emailsNotifications/specialRequest/userSpecialRequestAccepted.txt.twig'
+                    'emailsNotifications/specialRequest/userSpecialRequestAccepted.txt.twig', array('specialRequest' => $record)
                 ),
                 'text/html'
             );
@@ -140,7 +142,7 @@ class specialRequestController extends Controller
             ->setTo('wuregalia@gmail.com')
             ->setBody(
                 $this->renderView(
-                    'emailsNotifications/specialRequest/userSpecialRequestRejected.txt.twig'
+                    'emailsNotifications/specialRequest/userSpecialRequestRejected.txt.twig', array('specialRequest' => $record)
                 ),
                 'text/html'
             );
