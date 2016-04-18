@@ -7,10 +7,12 @@
             <link rel="stylesheet" href="{{ asset('Css/bootstrap.min.css') }}">
             {#<link rel="stylesheet" href="{{ asset('Css/bootstrap-theme.min.css') }}">#}
             <link rel="stylesheet" href="{{ asset('Css/style.css') }}">
+            {#<link rel="stylesheet" href="{{ asset('Css/material.min.css') }}">#}
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% block header %}
             <header>
                 {# Navigation starts here #}
   			        <nav class="navbar navbar-primary navbar-fixed-top">
@@ -34,7 +36,7 @@
                                     <a class="navbar-link navbar-left" href="{{ path('user_index') }}">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                         {{ app.user.username }}
-                                    </a> 
+                                    </a>
                                     <a href="/logout" type="button" class="btn btn-default">Logout</a>
                                 {% elseif not app.user %}
                                     {# user is not logged in (note the `not` in the `elseif` statement) #}
@@ -43,7 +45,7 @@
                       				    <div class="form-group">
                                             {#<label for="username">Username:</label>#}
                                             {#<input type="text" id="username" name="_username" value="{{ last_username }}" />#}
-                                            <input class="form-control" type="text" placeholder="username" id="username" name="_username"/>
+                                            <input class="form-control" type="text" placeholder="smithj2" id="username" name="_username"/>
                                         </div>
 
                                         <div class="form-group">
@@ -72,7 +74,9 @@
 
                 {# Navigation ends here #}
             </header>
-        {% block bodyContent %}{% endblock %}
+            {% endblock %}
+
+        {% block content %}{% endblock %}
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
             <script src="{{ asset('Js/bootstrap.min.js') }}"></script>

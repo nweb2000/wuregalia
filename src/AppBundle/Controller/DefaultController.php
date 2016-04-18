@@ -24,7 +24,7 @@ use AppBundle\Entity\Inventory;
         //Query builder
         $query = $inventories->createQueryBuilder('i')
             ->where('i.status_id = :status')
-            ->setParameter('status', '1')
+            ->setParameter('status', 'Available')
             ->getQuery();
 
         // $inventories = $em->getRepository('AppBundle:Inventory')

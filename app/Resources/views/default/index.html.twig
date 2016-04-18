@@ -1,10 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block header %}
+
+{# Filter form implementation #}
+<div class="container">
+  <form class="form-inline" action="{{ path('homepage') }}">
+    <div class="form-group">
+      <label>Filter</label>
+      <input class="form-control" type="checkbox-inline" name="filter">Cap
+      <input class="form-control" type="checkbox-inline" name="filter">Gown
+      <input class="form-control" type="checkbox-inline" name="filter">Hood
+      <input class="form-control" type="checkbox-inline" name="filter">Tassle
+    </div>
+  </form>
+</div>
+
+<p>Hello World!</p>
 
 <div class="row">
     {% for inventory in inventories %}
-      <div class="col-sm-6 col-md-4">
+      <div class="col-sm-6 col-md-4 offset-3">
         <div class="thumbnail">
           <img src="..." alt="...">
           <div class="caption">
@@ -12,12 +27,13 @@
             <p>{{ inventory.itemDescription }}</p>
             <p>
                 <a href="{{ path('inventory_show', { 'id': inventory.id }) }}" class="btn btn-primary" role="button">View</a>
-                <a href="" class="btn btn-default" role="button">Rent</a>
+                <a href="{{ path('rent', {'id': inventory.id}) }}" class="btn btn-default" role="button">Rent</a>
             </p>
           </div>
         </div>
       </div>
     {% endfor %}
 </div>
+
 
 {% endblock %}
