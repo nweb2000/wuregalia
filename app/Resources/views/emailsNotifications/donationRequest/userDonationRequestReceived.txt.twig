@@ -3,43 +3,51 @@
 WU Regalia Closet has received your donation request. <br>
 
 <table>
-   <tr>
+    <tr>
+        <td> Request id : </td>
+        <td> {{ donationRequest.id }} </td>
+    </tr>
+    <tr>
         <td> Username : </td>
-        <td> {{ item.user }} </td>
+        <td> {{ donationRequest.user }} </td>
     </tr>
     <tr>
         <td> Name : </td>
-        <td> {{ item.user.fname }} {{  item.user.lname }} </td>
+        <td> {{ donationRequest.user.fname }} {{  donationRequest.user.lname }} </td>
+    </tr>
+    <tr>
+        <td> User Email : </td>
+        <td> {{ donationRequest.user.email }} </td>
     </tr>
     <tr>
         <td> Type: </td>
-        <td>  {{ item.itemType }}  </td>
+        <td>  {{ donationRequest.itemType }}  </td>
     </tr>
     <tr>
         <td> Color :  </td>
-        <td>  {{item.itemColor }}  </td>
+        <td>  {{donationRequest.itemColor }}  </td>
     </tr>
     <tr>
         <td> School :  </td>
-        <td>  {{ item.itemSchool }}  </td>
+        <td>  {{ donationRequest.itemSchool }}  </td>
     </tr>
     <tr>
         <td> Major </td>
-        <td>  {{ item.itemMajor }}  </td>
+        <td>  {{ donationRequest.itemMajor }}  </td>
     </tr>
     <tr>
         <td> Length : </td>
-        <td>  {{ item.itemLength }}  </td>
+        <td>  {{ donationRequest.itemLength }}  </td>
     </tr>
     <tr>
         <td> Width : </td>
-        <td>  {{ item.itemWidth }}  </td>
+        <td>  {{ donationRequest.itemWidth }}  </td>
     </tr>
     <tr>
         <td> Description : </td>
     </tr>
     </table>
-    {{ item.itemDescription }}
+    {{ donationRequest.itemDescription }}
 
 
 Thank you for using WU Regalia Closet.
