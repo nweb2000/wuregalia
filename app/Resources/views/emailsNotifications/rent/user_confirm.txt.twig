@@ -1,15 +1,15 @@
-<h3> Donation Request Confirmation </h3>
+<h3> Regalia Rental Confirmation </h3>
 
-WU Regalia Closet has received your donation request. <br>
+WU Regalia Closet has received your rental request. <br>
 
 <table>
-   <tr>
+    <tr>
         <td> Username : </td>
-        <td> {{ item.user }} </td>
+        <td> {{ user.username }} </td>
     </tr>
     <tr>
         <td> Name : </td>
-        <td> {{ item.user.fname }} {{  item.user.lname }} </td>
+        <td> {{ user.fname }} {{ user.lname }} </td>
     </tr>
     <tr>
         <td> Type: </td>
@@ -40,6 +40,7 @@ WU Regalia Closet has received your donation request. <br>
     </tr>
     </table>
     {{ item.itemDescription }}
+    <br><br>
 
 
 Thank you for using WU Regalia Closet.

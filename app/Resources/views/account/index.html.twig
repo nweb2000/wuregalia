@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Your Reservations</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item Type</th>
+                <th>Rental Date</th>
+                <th>Due Date</th>
+                <th>Approved</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{reservation.item.itemType}}</td>
+                <td>{% if reservation.createDate %}{{ reservation.createDate|date('n-j-Y') }}{% endif %}</td>
+                <td>{% if reservation.dueDate %}{{ reservation.dueDate|date('n-j-Y') }}{% endif %}</td>
+                <td>{% if reservation.approved %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

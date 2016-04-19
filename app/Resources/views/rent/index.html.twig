@@ -2,8 +2,10 @@
 
 {% block body %}
     <h1>Inventory</h1>
-
-    <table>
+    {% if msg %}
+        <p>{{ msg }}</p>
+    {% endif %}
+    <table border="1">
         <thead>
             <tr>
                 <th>Regalia Type </th>
