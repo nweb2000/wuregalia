@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Special Requests</h2>
+    <table border="1" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Item Type</th>
+                <th>Color</th>
+                <th>School</th>
+                <th>Discipline</th>
+                <th>Length</th>
+                <th>Width</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inventory in items %}
+            <tr>
+                <td align="center">{{ inventory.id }}</a></td>
+                <td align="center">{{ inventory.itemDescription }}</td>
+                <td align="center">{{ inventory.itemType.name }}</td>
+                <td align="center">{{ inventory.itemColor.name }}</td>
+                <td align="center">{{ inventory.itemSchool.name }}</td>
+                <td align="center">{{ inventory.itemMajor.name }}</td>
+                <td align="center">{{ inventory.itemLength }}</td>
+                <td align="center">{{ inventory.itemWidth }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

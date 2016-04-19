@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Rental History for {{ user|first.user.username }}</h2>
+    <table border="1" >
+        <thead>
+            <tr>
+                <th>Item ID</th>
+                <th>Description</th>
+                <th>Item Type</th>
+                <th>Status</th>
+                <th>Color</th>
+                <th>Donor</th>
+                <th>School</th>
+                <th>Discipline</th>
+                <th>Length</th>
+                <th>Width</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for donation in user %}
+            <tr>
+                <td align="center">{{ donation.id }}</td>
+                <td align="center">{{ donation.itemDescription }}</td>
+                <td align="center">{{ donation.itemType.name }}</td>
+                <td align="center">{{ donation.itemStatus.name }}</td>
+                <td align="center">{{ donation.itemColor.name }}</td>
+                <td align="center">{{ donation.user.username }}</td>
+                <td align="center">{{ donation.itemSchool.name }}</td>
+                <td align="center">{{ donation.itemMajor.name }}</td>
+                <td align="center">{{ donation.itemLength }}</td>
+                <td align="center">{{ donation.itemWidth }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
