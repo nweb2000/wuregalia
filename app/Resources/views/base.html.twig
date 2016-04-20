@@ -13,46 +13,42 @@
         {% block nav %}
             <header>
                 {# Navigation starts here #}
-  			        <nav class="navbar navbar-light bg-faded">
-  <div class="nav navbar-nav">
-    <a class="nav-item nav-link active" href="{{ path('homepage') }}">WU Regalia Closet <span class="sr-only">(current)</span></a>
-    <a class="nav-item nav-link" href="{{ path('specialRequest') }}">Request</a>
-    <a class="nav-item nav-link" href="{{ path('donationRequest') }}">Donation</a>
-    {% if app.user %}
-      <p>User logged in</p>
-      <a class="navbar-link navbar-left" href="{{ path('user_index') }}">
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-          {{ app.user.username }}
-      </a>
-      <a href="/logout" type="button" class="btn btn-primary-outline">Logout</a>
+  			   <nav class="navbar navbar-light bg-faded">
+                  <div class="nav navbar-nav">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-item nav-link" href="{{ path('adminDonationRequest') }}">Manage Donations</a>
+                        <a class="nav-item nav-link" href="{{ path('adminSpecialRequest') }}">Manage Requests</a>
+                    {% else %}
+                    <a class="nav-item nav-link active" href="{{ path('homepage') }}">WU Regalia Closet <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="{{ path('specialRequest') }}">Request</a>
+                    <a class="nav-item nav-link" href="{{ path('donationRequest') }}">Donation</a>
+                    {% endif %}
+                    {% if app.user %}
+                      <a class="navbar-link navbar-left" href="{{ path('user_index') }}">
+                          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                          {{ app.user.username }}
+                      </a>
+                      <a href="/logout" type="button" class="btn btn-primary-outline">Logout</a>
+                    {% elseif not app.user %}
+                    <form class="form-inline pull-xs-right">
+                      <div class="form-group">
+                        <input class="form-control" type="text" placeholder="smithj2" id="username" name="_username"/>
+                      </div>
+                      <div class="form-group">
+                          {#<label for="password">Password:</label>#}
+                          <input class="form-control" type="password" placeholder="password" id="password" name="_password" />
+                      </div>
+                      <div class="form-group" id="PasswordField">
+                          <input class="form-control" type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                          <button type="submit" class="btn btn-primary-outline">
+                              login
+                          </button>
+                      </div>
+                    </form>
+                    {% endif %}
 
-    {% elseif not app.user %}
-    <form class="form-inline pull-xs-right">
-      <div class="form-group">
-        <input class="form-control" type="text" placeholder="smithj2" id="username" name="_username"/>
-      </div>
-      <div class="form-group">
-          {#<label for="password">Password:</label>#}
-          <input class="form-control" type="password" placeholder="password" id="password" name="_password" />
-      </div>
-
-      {#
-          If you want to control the URL the user
-          is redirected to on success (more details below)
-          <input type="hidden" name="_target_path" value="/" />
-      #}
-
-      <div class="form-group" id="PasswordField">
-          <input class="form-control" type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-          <button type="submit" class="btn btn-primary-outline">
-              login
-          </button>
-      </div>
-      <p>Must be logged in!!</p>
-    </form>
-    {% endif %}
-  </div>
-</nav>
+                  </div>
+                </nav>
 
                 {# Navigation ends here #}
             </header>

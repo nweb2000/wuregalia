@@ -64,16 +64,13 @@ class Inventory
     protected $itemDescription; 
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Regex("/^\d+$/")
+     * @ORM\Column(type="string", nullable=true, length=20)
+     * @Assert\Length(
+     *      max = 20,
+     *      maxMessage = "Please use less than 20 characters"
+     *      )
      */
-    protected $itemLength;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Regex("/^\d+$/")
-     */
-    protected $itemWidth;
+    protected $itemSize;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="inventoryItems")
@@ -115,49 +112,26 @@ class Inventory
     }
 
     /**
-     * Set itemLength
+     * Set itemSize
      *
-     * @param integer $itemLength
+     * @param string $itemSize
      * @return Inventory
      */
-    public function setItemLength($itemLength)
+    public function setItemSize($itemSize)
     {
-        $this->itemLength = $itemLength;
+        $this->itemSize = $itemSize;
 
         return $this;
     }
 
     /**
-     * Get itemLength
+     * Get itemSize
      *
-     * @return integer 
+     * @return string
      */
-    public function getItemLength()
+    public function getItemSize()
     {
-        return $this->itemLength;
-    }
-
-    /**
-     * Set itemWidth
-     *
-     * @param integer $itemWidth
-     * @return Inventory
-     */
-    public function setItemWidth($itemWidth)
-    {
-        $this->itemWidth = $itemWidth;
-
-        return $this;
-    }
-
-    /**
-     * Get itemWidth
-     *
-     * @return integer 
-     */
-    public function getItemWidth()
-    {
-        return $this->itemWidth;
+        return $this->itemSize;
     }
 
     /**

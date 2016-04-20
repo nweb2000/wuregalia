@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Here are the special request submitted to the system :</h2>
+    <h2> Special requests submitted to the system :</h2>
     <br>
     <table border="1" >
         <tr>
@@ -16,8 +16,7 @@
             <td>School</td>
             <td>Major</td>
             <td>Description</td>
-            <td>Length</td>
-            <td>Width</td>
+            <td>Size</td>
             <td>Accept</td>
             <td>Reject</td>
 
@@ -36,18 +35,13 @@
                 <td>{{ specialRequest.itemSchool }}</td>
                 <td>{{ specialRequest.itemMajor }}</td>
                 <td>{{ specialRequest.itemDescription }}</td>
-                <td>{{ specialRequest.itemlength }}</td>
-                <td>{{ specialRequest.itemWidth }}</td>
-                <td> <a href="{{ path('acceptSpecialRequest', { 'inventoryRequest': specialRequest.id , 'newStatus' : 3 })}}">Accept</a> </td>
+                <td>{{ specialRequest.itemSize }}</td>
+                <td> <a href="{{ path('acceptSpecialRequest', { 'inventoryRequest': specialRequest.id })}}">Accept</a> </td>
                 <td> <a href="{{ path('rejectSpecialRequest', { 'inventoryRequest': specialRequest.id })}}">Reject</a> </td>
 
             </tr>
 
     {% endfor %}
     <table>
-        <br>
 
-    <li>
-        <a href="{{ path('homepage') }}">Homepage</a>
-    </li>
 {% endblock %}

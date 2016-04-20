@@ -103,7 +103,7 @@ class ReservationController extends Controller
     }
 
     /**
-     * Deletes a Reservation entity.
+     * Deletes a Reservation entity and set its item to available
      *
      * @Route("/{id}", name="reservation_delete")
      * @Method("DELETE")
@@ -113,8 +113,11 @@ class ReservationController extends Controller
         $form = $this->createDeleteForm($reservation);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $status = $em->getRepository('AppBundle:Status')->findOneByName('AVAL');  //set the status to AVAL
+            $reservation->getItem()->setItemStatus($status);
             $em->remove($reservation);
             $em->flush();
         }

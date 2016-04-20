@@ -30,30 +30,34 @@ class specialRequestController extends Controller
     public function indexAction(Request $request)
     {
         $specialRequest = new Inventory();
-
+        // Create the special request form
         $form = $this->createFormBuilder($specialRequest)
             ->add('itemType')
             ->add('itemColor')
             ->add('itemSchool')
             ->add('itemMajor')
-            ->add('itemLength', TextType::class)
-            ->add('itemWidth', TextType::class)
-            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '80', 'rows' => '5','placeholder' => ''), ))
+            ->add('itemSize', TextType::class,  array('attr' => array('placeholder' => "Example : 5'8'' ")))
+            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '70', 'rows' => '5','placeholder' => 'Please specify the condition of the item'), ))
             ->add('save', SubmitType::class, array('label' => 'Submit your donation request'))
             ->getForm();
         $form->handleRequest($request);
 
+        // when the form is submitted and all fields are valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            # The "Special Request" status has an id = 1;
-            $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->find(1);
+            // set the status of the request to 'PENDING_SPECIAL'
+            $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
             $specialRequest->setItemStatus($Status);
-            #$User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
-            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => 'kashkarim2'));
+
+            // set the user of request to the user who is logged in.
+            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
             $specialRequest->setUser($User);
+
+            // put the request on the inventory table.
             $em = $this->getDoctrine()->getManager();
             $em->persist($specialRequest);
             $em->flush();
 
+            // send a notification email to the admin
             $message = \Swift_Message::newInstance()
                 ->setSubject('New Special Request Submitted to WU Regalia Closet')
                 ->setFrom('wuregalia@gmail.com')
@@ -66,6 +70,7 @@ class specialRequestController extends Controller
                 );
             $this->get('mailer')->send($message);
 
+            // send a confirmation email to the admin
             $message = \Swift_Message::newInstance()
                 ->setSubject('Special Request Confirmation')
                 ->setFrom('wuregalia@gmail.com')
@@ -78,9 +83,11 @@ class specialRequestController extends Controller
                 );
             $this->get('mailer')->send($message);
 
+            // go to the confirmation page
             return $this->render('specialRequest/success.html.twig');
         }
 
+        // show the form, including an error if it was submitted and not valid.
         return $this->render('specialRequest/new.html.twig', array(
             'form' => $form->createView()
         ));
@@ -90,7 +97,9 @@ class specialRequestController extends Controller
      */
     public function adminAction(Request $request)
     {
-        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
+        // find all inventory records with a status of pending special request
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
+        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList
         ));
@@ -98,16 +107,18 @@ class specialRequestController extends Controller
 
 
     /**
-     * @Route("/admin/special_request/status/{inventoryRequest}/{newStatus}", name="acceptSpecialRequest")
+     * @Route("/admin/special_request/status/{inventoryRequest}", name="acceptSpecialRequest")
      */
-    public function adminChangeStatusAction(Request $request, $inventoryRequest,  $newStatus)
+    public function adminChangeStatusAction(Request $request, $inventoryRequest)
     {
+        // set the status of the request to pending arrival when the special request is accepted
         $em = $this->getDoctrine()->getManager();
         $record = $em->getRepository('AppBundle:Inventory')->find($inventoryRequest);
-        $Status = $em->getRepository('AppBundle:Status')->find($newStatus);
+        $Status = $em->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_ARRIVAL'));
         $record->setItemStatus($Status);
         $em->flush();
 
+        // send an email to the user to let him/her know that the request has been accepted
         $message = \Swift_Message::newInstance()
             ->setSubject('Special Request Accepted')
             ->setFrom('wuregalia@gmail.com')
@@ -120,7 +131,9 @@ class specialRequestController extends Controller
             );
         $this->get('mailer')->send($message);
 
-        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
+        // show all of the inventory records with a status of pending special request
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
+        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList));
     }
@@ -131,11 +144,13 @@ class specialRequestController extends Controller
      */
     public function adminRejectSpecialRequestAction(Request $request,$inventoryRequest)
     {
+        // delete the request when it is rejected
         $em = $this->getDoctrine()->getManager();
         $record = $em->getRepository('AppBundle:Inventory')->find($inventoryRequest);
         $em->remove($record);
         $em->flush();
 
+        // send an email to the user to let him/her know that the request has been rejected
         $message = \Swift_Message::newInstance()
             ->setSubject('Special Request Rejected')
             ->setFrom('wuregalia@gmail.com')
@@ -146,9 +161,11 @@ class specialRequestController extends Controller
                 ),
                 'text/html'
             );
-
         $this->get('mailer')->send($message);
-        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
+
+        // show all of the inventory records with a status of pending special request
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
+        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList));
     }

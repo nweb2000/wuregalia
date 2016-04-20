@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Report Menu:</h2>
+    <table border="1" >
+        <tr>
+            <td> <a href="{{ path('showUsers')}}">All Users</a> </td>
+            <td> <a href="{{ path('showAdmins')}}">Administrators</a> </td>
+            <td> <a href="{{ path('showRegisteredUsers')}}">Registered Users</a> </td>
+            <td> <a href="{{ path('showInventory')}}">All Inventory</a> </td>
+            <td> <a href="{{ path('showAvailibleInventory')}}">Availible Inventory</a> </td>
+            <td> <a href="{{ path('showRentedInventory')}}">Currently Rented Inventory</a> </td>
+            <td> <a href="{{ path('showDonationInventory')}}">Pending Donations</a> </td>
+            <td> <a href="{{ path('showSpecialRequests')}}">Special Requests</a> </td>
+            <td> <a href="{{ path('showRentalHistory')}}">All Rental History</a> </td>
+            <td> <a href="{{ path('showPendingArrivals')}}">Donations Pending Arrival</a> </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    
+    {% if user %}
+    <h3>Donation History for {{ user|first.user.username }}</h3>
+    {% endif %}
+    
+    <table border="1" >
+        <thead>            
+            <tr>
+                <th>Item ID</th>
+                <th>Description</th>
+                <th>Item Type</th>
+                <th>Status</th>
+                <th>Color</th>
+                <th>Donor</th>
+                <th>School</th>
+                <th>Discipline</th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for donation in user %}
+            <tr>
+                <td align="center">{{ donation.id }}</td>
+                <td align="center">{{ donation.itemDescription }}</td>
+                <td align="center">{{ donation.itemType.name }}</td>
+                <td align="center">{{ donation.itemStatus.name }}</td>
+                <td align="center">{{ donation.itemColor.name }}</td>
+                <td align="center">{{ donation.user.username }}</td>
+                <td align="center">{{ donation.itemSchool.name }}</td>
+                <td align="center">{{ donation.itemMajor.name }}</td>
+                <td align="center">{{ donation.itemSize }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  
+{% endblock %}
