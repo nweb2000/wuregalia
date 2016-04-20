@@ -12,7 +12,7 @@ use AppBundle\Form\ReservationType;
 /**
  * Reservation controller.
  *
- * @Route("/res", name="reserve")
+ * @Route("admin/res", name="reserve")
  */
 class ReservationController extends Controller
 {
@@ -65,15 +65,15 @@ class ReservationController extends Controller
      * @Route("/notify", name="reservation_notify")
      */
 
-    public function notifyAction() 
+    public function notifyAction()
     {
        //send confirmation email to user
-        
+
         $em = $this->getDoctrine()->getManager();
         $reservations = $em->getRepository('AppBundle:Reservation')->findAll();
-        foreach($reservations as $reservation) 
+        foreach($reservations as $reservation)
         {
-            if($reservation->isLate()) 
+            if($reservation->isLate())
             {
                 $user = $reservation->getUserid();
                 $item = $reservation->getItem();
@@ -86,7 +86,7 @@ class ReservationController extends Controller
                     $this->renderView(
                         'emailsNotifications/rent/overdue_notify.txt.twig',
                             array('item' => $item, 'user' => $user, 'admin' => $admin)), 'text/html');
-                            $this->get('mailer')->send($message); 
+                            $this->get('mailer')->send($message);
                 }
         }
         return $this->redirectToRoute('reservation_index');

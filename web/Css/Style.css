@@ -2,3 +2,7 @@
         border-color: transparent;
         background-color: transparent;
 }
+
+footer a:hover {
+        color:white;
+}

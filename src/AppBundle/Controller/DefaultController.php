@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Inventory;
 use AppBundle\Entity\Reservation;
 use AppBundle\Form\InventoryType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
  class DefaultController extends Controller
  {
@@ -35,19 +37,19 @@ use AppBundle\Form\InventoryType;
      * @Method("GET")
      *
      */
-     public function filterAction(Request $request)
+     public function filterAction(Request $request, $filter)
      {
         $em = $this->getDoctrine()->getManager();
         $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
         $inventories = $em->getRepository('AppBundle:Inventory')->findByItemStatus($avalStatus->getId());
 
-        $returnItems = null;
+        $returnItems = [];
 
         foreach ($inventories as $inventory)
         {
-            if ($inventory->getItemType() == $request)
+            if ($inventory->getItemType() == $filter)
             {
-                $returnItems += $inventory;
+                $returnItems[] = $inventory;
             }
         }
 
@@ -55,5 +57,23 @@ use AppBundle\Form\InventoryType;
             'inventories' => $returnItems
         ));
      }
+
+     /**
+      * @Route("/userdownload", name="user-download")
+      **/
+    public function downloadFileActionUser() {
+        $response = new BinaryFileResponse('files/user-guide.pdf');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'user-guide');
+        return $response;
+    }
+
+     /**
+      * @Route("/admindownload", name="admin-download")
+      **/
+    public function downloadFileActionAdmin() {
+        $response = new BinaryFileResponse('files/admin-guide.pdf');
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'admin-guide');
+        return $response;
+    }
 
  }
