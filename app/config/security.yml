@@ -48,16 +48,9 @@ security:
     access_control:
         #- { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http, host: localhost$ } #REMOVE FOR PRODUCTION
         #- { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }  #force https for all urls
-<<<<<<< HEAD
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/special_request, roles: ROLE_USER } #add requires https after
         - { path: ^/rent, roles: ROLE_USER } #add requires https after
         - { path: ^/donation_request, roles: ROLE_USER }
         - { path: ^/reservation, roles: ROLE_USER }
-=======
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/special_request, roles: ROLE_USER } #add requires https after
-         - { path: ^/rent, roles: ROLE_USER } #add requires https after
-         - { path: ^/donation_request, roles: ROLE_USER }
-         - { path: ^/reservation, roles: ROLE_USER }
->>>>>>> 6bb593f0a287c07dee6a372ffc383d51dcb20703
+
