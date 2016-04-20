@@ -18,8 +18,11 @@
     </table>
     <br>
     <br>
-        
+    
+    {% if user %}
     <h3>Rental History for {{ user|first.userid.username }}</h3>
+    {% endif %}
+    
     <table border="1" >
         <thead>
             <tr>

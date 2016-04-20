@@ -19,9 +19,10 @@
     <br>
     <br>
     
-    {{% if user %}}
-    <h3>Rental History for {{ user|first.user.username }}</h3>
-    {{% endif %}}
+    {% if user %}
+    <h3>Donation History for {{ user|first.user.username }}</h3>
+    {% endif %}
+    
     <table border="1" >
         <thead>            
             <tr>
@@ -33,8 +34,7 @@
                 <th>Donor</th>
                 <th>School</th>
                 <th>Discipline</th>
-                <th>Length</th>
-                <th>Width</th>
+                <th>Size</th>
             </tr>
         </thead>
         <tbody>
@@ -48,8 +48,7 @@
                 <td align="center">{{ donation.user.username }}</td>
                 <td align="center">{{ donation.itemSchool.name }}</td>
                 <td align="center">{{ donation.itemMajor.name }}</td>
-                <td align="center">{{ donation.itemLength }}</td>
-                <td align="center">{{ donation.itemWidth }}</td>
+                <td align="center">{{ donation.itemSize }}</td>
             </tr>
         {% endfor %}
         </tbody>
