@@ -19,6 +19,8 @@
                         <a class="nav-item nav-link" href="{{ path('adminDonationRequest') }}">Manage Donations</a>
                         <a class="nav-item nav-link" href="{{ path('adminSpecialRequest') }}">Manage Requests</a>
                         <a class="nav-item nav-link" href="{{ path('reservation_index') }}">Manage Reservations</a>
+                        <a class="nav-item nav-link" href="{{ path('user_index') }}">Account Management</a>
+                        <a href="/logout" type="button" class="btn btn-primary-outline pull-xs-right">Logout</a>
                     {% else %}
                     <a class="nav-item nav-link active" href="{{ path('homepage') }}">WU Regalia Closet <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="{{ path('specialRequest') }}">Request</a>
@@ -29,7 +31,7 @@
                           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                           {{ app.user.username }}
                       </a>
-                      <a href="/logout" type="button" class="btn btn-primary-outline">Logout</a>
+                      <a href="/logout" type="button" class="btn btn-primary-outline pull-xs-right">Logout</a>
                     {% elseif not app.user %}
                     <form class="form-inline pull-xs-right" action="/login" method="post">
                       <div class="form-group">
@@ -46,6 +48,7 @@
                           </button>
                       </div>
                     </form>
+                    {% block loginError %} {% endblock %}
                     {% endif %}
 
                   </div>
@@ -67,18 +70,29 @@
         {% block footer %}
 		<footer>
 			{#<div id="FooterContent" class="text-center">#}
-			<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+			<div class="navbar navbar-inverse" role="navigation">
 			    <div class="container">
     			        <div class="navbar-text pull-left">
-        				<h4>Need Help?</h4>
-        				<p><strong>Call</strong>: 803-999-9999 or <strong>Email</strong>: example@winthrop.edu</p>
+    			            <div class="row">
+    			                <div class="col-md-6">
+    			                    	<h5>Need Help?</h5>
+        				                <p><strong>Call</strong>: 803-999-9999 or <strong>Email</strong>: example@winthrop.edu</p>
+    			                </div>
 
-        				<a role="button" class="btn btn-primary-outline" href="{{ path('user-download') }}">User Manual</a>
-        				{% if is_granted('ROLE_ADMIN') %}
-        				    <a role="button" class="btn btn-primary-outline" href="{{ path('admin-download') }}">Administrator Guide</a>
-        				{% endif %}
+    			                <div class="col-md-6">
+    			                    	<a role="button" class="btn btn-primary-outline pull-xs-right" href="{{ path('user-download') }}">User Manual</a>
+        				                {% if is_granted('ROLE_ADMIN') %}
+        				                <a role="button" class="btn btn-primary-outline pull-xs-right" href="{{ path('admin-download') }}">Administrator Guide</a>
+        				                {% endif %}
+    			                </div>
+    			            </div>
+
+    			            </div>
+
+
+
     				</div>
-				</div>>
+				</div>
 			</div>
 		</footer>
 		{% endblock %}

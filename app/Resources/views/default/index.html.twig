@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-
+{% block loginError %}
+{% if loginMessage%}
+<p class="pull-xs-right"><small>{{ loginMessage }}</small></p>
+{% endif %}
+{% endblock %}
 
 {% block body %}
 {# Filter form implementation #}
