@@ -59,23 +59,24 @@ class donationRequestController extends Controller
             $em->flush();
 
             // send a notification email to the admin
-            $message = \Swift_Message::newInstance()
+            /*$message = \Swift_Message::newInstance()
                 ->setSubject('New Donation Request Submitted to WU Regalia Closet')
                 ->setFrom('wuregalia@gmail.com')
-                ->setTo('wuregalia@gmail.com')
+                ->setTo('admin email address goes here')
                 ->setBody(
                     $this->renderView(
                         'emailsNotifications/donationRequest/adminNewDonationRequest.txt.twig',array('donationRequest' => $donationRequest)
                     ),
                     'text/html'
                 );
-            $this->get('mailer')->send($message);
+            $this->get('mailer')->send($message);*/
 
-            // send a confirmation email to the admin
+            $user = $this->getUser();
+            // send a confirmation email to the user
             $message = \Swift_Message::newInstance()
                 ->setSubject('Donation Request Confirmation')
                 ->setFrom('wuregalia@gmail.com')
-                ->setTo('wuregalia@gmail.com')
+                ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
                         'emailsNotifications/donationRequest/userDonationRequestReceived.txt.twig', array('donationRequest' => $donationRequest)
@@ -118,11 +119,12 @@ class donationRequestController extends Controller
 
         $em->flush();
 
+        $user = $this->getUser();
         // send an email to the user to let him/her know that the request has been accepted
         $message = \Swift_Message::newInstance()
             ->setSubject('Donation Request Accepted')
             ->setFrom('wuregalia@gmail.com')
-            ->setTo('wuregalia@gmail.com')
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
                     'emailsNotifications/donationRequest/userDonationRequestAccepted.txt.twig', array('donationRequest' => $record)
@@ -150,11 +152,12 @@ class donationRequestController extends Controller
         $em->remove($record);
         $em->flush();
 
+        $user = $this->getUser();
         // send an email to the user to let him/her know that the request has been rejected
         $message = \Swift_Message::newInstance()
             ->setSubject('Donation Request Rejected')
             ->setFrom('wuregalia@gmail.com')
-            ->setTo('wuregalia@gmail.com')
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
                     'emailsNotifications/donationRequest/userDonationRequestRejected.txt.twig', array('donationRequest' => $record)

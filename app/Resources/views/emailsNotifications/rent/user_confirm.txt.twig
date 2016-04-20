@@ -1,8 +1,14 @@
 <h3> Regalia Rental Confirmation </h3>
 
-WU Regalia Closet has received your rental request. <br>
+WU Regalia Closet has received your rental request. Please remember to return 
+the item to {{ admin }} at the Dacus Library by the due date.
+<br>
 
 <table>
+    <tr>
+        <td> Due Date: </td>
+        <td> {{ duedate }} </td>
+    </tr>
     <tr>
         <td> Username : </td>
         <td> {{ user.username }} </td>
@@ -26,14 +32,6 @@ WU Regalia Closet has received your rental request. <br>
     <tr>
         <td> Major </td>
         <td>  {{ item.itemMajor }}  </td>
-    </tr>
-    <tr>
-        <td> Length : </td>
-        <td>  {{ item.itemLength }}  </td>
-    </tr>
-    <tr>
-        <td> Width : </td>
-        <td>  {{ item.itemWidth }}  </td>
     </tr>
     <tr>
         <td> Description : </td>
