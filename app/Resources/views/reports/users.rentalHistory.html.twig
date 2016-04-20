@@ -1,28 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Report Menu:</h2>
-    <table border="1" >
-        <tr>
-            <td> <a href="{{ path('showUsers')}}">All Users</a> </td>
-            <td> <a href="{{ path('showAdmins')}}">Administrators</a> </td>
-            <td> <a href="{{ path('showRegisteredUsers')}}">Registered Users</a> </td>
-            <td> <a href="{{ path('showInventory')}}">All Inventory</a> </td>
-            <td> <a href="{{ path('showAvailibleInventory')}}">Availible Inventory</a> </td>
-            <td> <a href="{{ path('showRentedInventory')}}">Currently Rented Inventory</a> </td>
-            <td> <a href="{{ path('showDonationInventory')}}">Pending Donations</a> </td>
-            <td> <a href="{{ path('showSpecialRequests')}}">Special Requests</a> </td>
-            <td> <a href="{{ path('showRentalHistory')}}">All Rental History</a> </td>
-            <td> <a href="{{ path('showPendingArrivals')}}">Donations Pending Arrival</a> </td>
-        </tr>
-    </table>
+{% embed "admin_base.html.twig" %} {% endembed %}
     <br>
     <br>
-    
+
     {% if user %}
     <h3>Rental History for {{ user|first.userid.username }}</h3>
     {% endif %}
-    
+
     <table border="1" >
         <thead>
             <tr>
@@ -53,5 +39,5 @@
         {% endfor %}
         </tbody>
     </table>
-    
+
 {% endblock %}

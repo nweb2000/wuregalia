@@ -25,8 +25,11 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
         $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
         $inventories = $em->getRepository('AppBundle:Inventory')->findByItemStatus($avalStatus->getId());
 
+        $loginMessage = null;
+
         return $this->render('default/index.html.twig', array(
-            'inventories' => $inventories
+            'inventories' => $inventories,
+            'loginMessage' => $loginMessage
         ));
      }
 
@@ -37,7 +40,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
      * @Method("GET")
      *
      */
-     public function filterAction(Request $request, $filter)
+     public function filterAction(Request $request, $filter, $loginMessage = null)
      {
         $em = $this->getDoctrine()->getManager();
         $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
@@ -54,7 +57,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
         }
 
         return $this->render('default/index.html.twig', array (
-            'inventories' => $returnItems
+            'inventories' => $returnItems,
+            'loginMessage' => $loginMessage
         ));
      }
 

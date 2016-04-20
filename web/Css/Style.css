@@ -3,6 +3,14 @@
         background-color: transparent;
 }
 
-footer a:hover {
-        color:white;
+header {
+        backgroud-color: #C6D2E1;
+}
+
+footer {
+        background-color:#FFEEBB;
+}
+
+footer .row {
+        padding-top:2%;
 }

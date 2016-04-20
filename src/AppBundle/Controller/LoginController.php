@@ -31,13 +31,18 @@ class LoginController extends Controller
         // last username entered by the user
         $lastUsername = $authUtils->getLastUsername();
 
-        return $this->render(
-            'base.html.twig',
-            array(
-                // last username entered by the user
-                'last_username' => $lastUsername,
-                'error'         => $error
-            ));
+        $loginMessage = "Must be signed in!";
+
+        //getting the entity manganer as $em
+        $em = $this->getDoctrine()->getManager();
+
+        $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
+        $inventories = $em->getRepository('AppBundle:Inventory')->findByItemStatus($avalStatus->getId());
+
+        return $this->render('default/index.html.twig', array(
+            'inventories' => $inventories,
+            'loginMessage' => $loginMessage
+        ));
     }
 
 }
