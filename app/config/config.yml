@@ -66,14 +66,4 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
     
-# snappy configuration
-knp_snappy:
-    temporary_folder: %kernel.cache_dir%/snappy
-    pdf:
-        enabled:    true
-        binary:     "\"C:\\projects\\p2\\wuregalia\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
-        options:    []
-    image:
-        enabled:    true
-        binary:     "\"C:\\projects\\p2\\wuregalia\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
-        options:    []
+

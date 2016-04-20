@@ -21,14 +21,8 @@
     
     <h3>Special Requests</h3>
     <table border="1" >
-        <tr>
-            <td> <a href="{{ path('createSpecialRequestsPDF')}}">Print/Download (Convert to PDF)</a> </td>
-        </tr>
-    </table>
-    <table border="1" >
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Description</th>
                 <th>Item Type</th>
                 <th>Color</th>
@@ -41,7 +35,6 @@
         <tbody>
         {% for inventory in items %}
             <tr>
-                <td align="center">{{ inventory.id }}</td>
                 <td align="center">{{ inventory.itemDescription }}</td>
                 <td align="center">{{ inventory.itemType.name }}</td>
                 <td align="center">{{ inventory.itemColor.name }}</td>
