@@ -4,81 +4,67 @@
         <meta charset="UTF-8" />
         <title>{% block title %}WU Regalia{% endblock %}</title>
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('Css/bootstrap.min.css') }}">
-            {#<link rel="stylesheet" href="{{ asset('Css/bootstrap-theme.min.css') }}">#}
-            <link rel="stylesheet" href="{{ asset('Css/style.css') }}">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ asset('Css/Style.css')}}">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% block nav %}
             <header>
                 {# Navigation starts here #}
-  			        <nav class="navbar navbar-primary navbar-fixed-top">
-  			            <div class="container-fluid">
-          				    <div class="navbar-header">
-              					<!-- Page links -->
-              					<a class="navbar-brand" href="{{ path('homepage') }}">WU Regalia Closet</a>
-              				</div>
-              				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  				<ul class="nav navbar-nav">
-                  				    <li><a href="{{ path('rent') }}">Rent</a></li>
-                  					<li><a href="{{ path('donationRequest') }}">Donate</a></li>
-                  					<li><a href="{{ path('specialRequest') }}">Request</a></li>
-                  					<!-- Page links end -->
-                  				</ul>
+  			   <nav class="navbar navbar-light bg-faded">
+                  <div class="nav navbar-nav">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-item nav-link" href="{{ path('adminDonationRequest') }}">Manage Donations</a>
+                        <a class="nav-item nav-link" href="{{ path('adminSpecialRequest') }}">Manage Requests</a>
+                        <a class="nav-item nav-link" href="{{ path('reservation_index') }}">Manage Reservations</a>
+                    {% else %}
+                    <a class="nav-item nav-link active" href="{{ path('homepage') }}">WU Regalia Closet <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="{{ path('specialRequest') }}">Request</a>
+                    <a class="nav-item nav-link" href="{{ path('donationRequest') }}">Donation</a>
+                    {% endif %}
+                    {% if app.user %}
+                      <a class="navbar-link navbar-left" href="{{ path('user_index') }}">
+                          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                          {{ app.user.username }}
+                      </a>
+                      <a href="/logout" type="button" class="btn btn-primary-outline">Logout</a>
+                    {% elseif not app.user %}
+                    <form class="form-inline pull-xs-right">
+                      <div class="form-group">
+                        <input class="form-control" type="text" placeholder="smithj2" id="username" name="_username"/>
+                      </div>
+                      <div class="form-group">
+                          {#<label for="password">Password:</label>#}
+                          <input class="form-control" type="password" placeholder="password" id="password" name="_password" />
+                      </div>
+                      <div class="form-group" id="PasswordField">
+                          <input class="form-control" type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                          <button type="submit" class="btn btn-primary-outline">
+                              login
+                          </button>
+                      </div>
+                    </form>
+                    {% endif %}
 
-
-                  				{% if app.user %}
-                                    {# user is logged in (any and all users, regardless of ROLE_*) #}
-                                    {#<p>Welcom {{ app.user.username }}</p>#}
-                                    <a class="navbar-link navbar-left" href="{{ path('account_index') }}">
-                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                        {{ app.user.username }}
-                                    </a> 
-                                    <a href="/logout" type="button" class="btn btn-default">Logout</a>
-                                {% elseif not app.user %}
-                                    {# user is not logged in (note the `not` in the `elseif` statement) #}
-                                    <!-- Login inputs -->
-                                    <form class="navbar-form navbar-right" action="{{ path('login') }}" method="post">
-                      				    <div class="form-group">
-                                            {#<label for="username">Username:</label>#}
-                                            {#<input type="text" id="username" name="_username" value="{{ last_username }}" />#}
-                                            <input class="form-control" type="text" placeholder="username" id="username" name="_username"/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            {#<label for="password">Password:</label>#}
-                                            <input class="form-control" type="password" placeholder="password" id="password" name="_password" />
-                                        </div>
-
-                                        {#
-                                            If you want to control the URL the user
-                                            is redirected to on success (more details below)
-                                            <input type="hidden" name="_target_path" value="/" />
-                                        #}
-
-                                        <div class="form-group" id="PasswordField">
-                                            <input class="form-control" type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                                            <button type="submit" class="btn btn-primary">
-                                                login
-                                            </button>
-                                        </div>
-                                    </form>
-                      				<!-- Login inputs end -->
-                  				{% endif %}
-                  			</div>
-          				</div>
-  			        </nav>
+                  </div>
+                </nav>
 
                 {# Navigation ends here #}
             </header>
-        {% block body%}{% endblock %}
+            {% endblock %}
+
+        {% block body %}
+
+        {% endblock %}
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-            <script src="{{ asset('Js/bootstrap.min.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
         {% endblock %}
 
         <!-- Footer starts here -->
+        {% block footer %}
 		<footer>
 			{#<div id="FooterContent" class="text-center">#}
 			<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
@@ -86,10 +72,17 @@
     			        <div class="navbar-text pull-left">
         				<h4>Need Help?</h4>
         				<p><strong>Call</strong>: 803-999-9999 or <strong>Email</strong>: example@winthrop.edu</p>
+
+        				<a role="button" class="btn btn-primary-outline" href="{{ path('user-download') }}">User Manual</a>
+        				{% if is_granted('ROLE_ADMIN') %}
+        				    <a role="button" class="btn btn-primary-outline" href="{{ path('admin-download') }}">Administrator Guide</a>
+        				{% endif %}
     				</div>
 				</div>>
 			</div>
 		</footer>
+		{% endblock %}
     	<!-- Footer ends here -->
     </body>
 </html>
+
