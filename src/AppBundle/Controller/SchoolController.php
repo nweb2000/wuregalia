@@ -12,7 +12,7 @@ use AppBundle\Form\SchoolType;
 /**
  * School controller.
  *
- * @Route("/school")
+ * @Route("/admin/school")
  */
 class SchoolController extends Controller
 {

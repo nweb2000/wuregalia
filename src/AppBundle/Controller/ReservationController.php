@@ -12,7 +12,7 @@ use AppBundle\Form\ReservationType;
 /**
  * Reservation controller.
  *
- * @Route("admin/res", name="reserve")
+ * @Route("/admin/res", name="reserve")
  */
 class ReservationController extends Controller
 {

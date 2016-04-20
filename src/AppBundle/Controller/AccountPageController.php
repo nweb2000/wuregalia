@@ -15,7 +15,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 
 /**
- * @Route("/account")
+ * @Route("/admin/account")
  */
 class AccountPageController extends Controller
 {

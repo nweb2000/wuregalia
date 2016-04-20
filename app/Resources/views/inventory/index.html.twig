@@ -8,6 +8,7 @@
             <tr>
                 <th>Id</th>
                 <th>Itemdescription</th>
+                <th>ItemType</th>
                 <th>ItemSchool</th>
                 <th>ItemMajor</th>
                 <th>itemColor</th>
@@ -23,6 +24,7 @@
             <tr>
                 <td><a href="{{ path('inventory_show', { 'id': inventory.id }) }}">{{ inventory.id }}</a></td>
                 <td>{{ inventory.itemDescription }}</td>
+                <td>{{ inventory.itemType }}</td>
                 <td>{{ inventory.itemSchool }}</td>
                 <td>{{ inventory.itemMajor }}</td>
                 <td>{{ inventory.itemColor }}</td>

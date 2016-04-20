@@ -12,7 +12,7 @@ use AppBundle\Form\StatusType;
 /**
  * Status controller.
  *
- * @Route("/status")
+ * @Route("/admin/status")
  */
 class StatusController extends Controller
 {

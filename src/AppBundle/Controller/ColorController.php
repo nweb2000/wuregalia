@@ -12,7 +12,7 @@ use AppBundle\Form\ColorType;
 /**
  * Color controller.
  *
- * @Route("/color")
+ * @Route("/admin/color")
  */
 class ColorController extends Controller
 {
