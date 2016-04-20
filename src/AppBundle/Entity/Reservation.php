@@ -53,8 +53,7 @@ class Reservation
     public function __construct($user, $item)
     {
         $this->createDate = new \DateTime(); //this defualts to using creation date as default
-        dump($this->createDate);
-        $this->dueDate= new \DateTime();  //NEED TO SET THIS SO THAT IT DEFUALTS TO CREATE DATA + RENTAL TIME
+        $this->dueDate= date_add(new \DateTime(), date_interval_create_from_date_string('14 days')); //due date is 2 weeks after rent
         $this->approved = false;
         $this->userid = $user;
         $this->item = $item;

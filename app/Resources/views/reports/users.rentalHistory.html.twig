@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Report Menu:</h2>
+    <table border="1" >
+        <tr>
+            <td> <a href="{{ path('showUsers')}}">All Users</a> </td>
+            <td> <a href="{{ path('showAdmins')}}">Administrators</a> </td>
+            <td> <a href="{{ path('showRegisteredUsers')}}">Registered Users</a> </td>
+            <td> <a href="{{ path('showInventory')}}">All Inventory</a> </td>
+            <td> <a href="{{ path('showAvailibleInventory')}}">Availible Inventory</a> </td>
+            <td> <a href="{{ path('showRentedInventory')}}">Currently Rented Inventory</a> </td>
+            <td> <a href="{{ path('showDonationInventory')}}">Pending Donations</a> </td>
+            <td> <a href="{{ path('showSpecialRequests')}}">Special Requests</a> </td>
+            <td> <a href="{{ path('showRentalHistory')}}">All Rental History</a> </td>
+            <td> <a href="{{ path('showPendingArrivals')}}">Donations Pending Arrival</a> </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+        
+    <h3>Rental History for {{ user|first.userid.username }}</h3>
+    <table border="1" >
+        <thead>
+            <tr>
+                <th>Rental Id</th>
+                <th>Createdate</th>
+                <th>Duedate</th>
+                <th>Approved</th>
+                <th>Item ID</th>
+                <th>Item Type</th>
+                <th>Item Color</th>
+                <th>Item School</th>
+                <th>Item Discipline</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in user %}
+            <tr>
+                <td align="center">{{ reservation.id }}</a></td>
+                <td align="center">{% if reservation.createDate %}{{ reservation.createDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td align="center">{% if reservation.dueDate %}{{ reservation.dueDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td align="center">{% if reservation.approved %}Yes{% else %}No{% endif %}</td>
+                <td align="center">{{ reservation.item.id }}</td>
+                <td align="center">{{ reservation.item.itemType.name }}</td>
+                <td align="center">{{ reservation.item.itemColor.name }}</td>
+                <td align="center">{{ reservation.item.itemSchool.name }}</td>
+                <td align="center">{{ reservation.item.itemMajor.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

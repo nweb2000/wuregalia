@@ -21,7 +21,7 @@
               				</div>
               				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   				<ul class="nav navbar-nav">
-                  				    {#	<!--a href="{{ path('rent') }}"><li>Rent</li></a--> #}
+                  				    <li><a href="{{ path('rent') }}">Rent</a></li>
                   					<li><a href="{{ path('donationRequest') }}">Donate</a></li>
                   					<li><a href="{{ path('specialRequest') }}">Request</a></li>
                   					<!-- Page links end -->
@@ -31,7 +31,7 @@
                   				{% if app.user %}
                                     {# user is logged in (any and all users, regardless of ROLE_*) #}
                                     {#<p>Welcom {{ app.user.username }}</p>#}
-                                    <a class="navbar-link navbar-left" href="{{ path('user_index') }}">
+                                    <a class="navbar-link navbar-left" href="{{ path('account_index') }}">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                         {{ app.user.username }}
                                     </a> 
