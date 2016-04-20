@@ -36,21 +36,18 @@ class donationRequestController extends Controller
             ->add('itemColor')
             ->add('itemSchool')
             ->add('itemMajor')
-            ->add('itemLength', TextType::class)
-            ->add('itemWidth', TextType::class)
-            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '80', 'rows' => '5'), ))
+            ->add('itemSize', TextType::class,  array('attr' => array('placeholder' => "Example : 5'8'' ")))
+            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '70', 'rows' => '5','placeholder' => 'Please specify the condition of the item'), ))
             ->add('save', SubmitType::class, array('label' => 'Submit your donation request'))
             ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            # The "donation Request" status has an id = 4;
-            $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->find(4);
+            $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_DONATION'));
             $donationRequest->setItemStatus($Status);
-            #$User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
-            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => 'kashkarim2'));
-
+            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
             $donationRequest->setUser($User);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($donationRequest);
             $em->flush();
@@ -91,21 +88,23 @@ class donationRequestController extends Controller
      */
     public function adminAction(Request $request)
     {
-        $donationRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '4' ));
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_DONATION'));
+        $donationRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
 
         return $this->render('donationRequest/admin.html.twig',array(
             'donationRequests' => $donationRequestsList
         ));
     }
     /**
-     * @Route("/admin/donation_request/status/{inventoryRequest}/{newStatus}", name="acceptDonationRequest")
+     * @Route("/admin/donation_request/status/{inventoryRequest}", name="acceptDonationRequest")
      */
-    public function adminChangeStatusAction(Request $request, $inventoryRequest,  $newStatus)
+    public function adminChangeStatusAction(Request $request, $inventoryRequest)
     {
         $em = $this->getDoctrine()->getManager();
         $record = $em->getRepository('AppBundle:Inventory')->find($inventoryRequest);
-        $Status = $em->getRepository('AppBundle:Status')->find($newStatus);
+        $Status = $em->getRepository('AppBundle:Status')->findOneBy(array('name' => 'PENDING_ARRIVAL' ));
         $record->setItemStatus($Status);
+
         $em->flush();
 
         $message = \Swift_Message::newInstance()
@@ -120,7 +119,8 @@ class donationRequestController extends Controller
             );
         $this->get('mailer')->send($message);
 
-        $donationRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '4' ));
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_DONATION'));
+        $donationRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('donationRequest/admin.html.twig',array(
             'donationRequests' => $donationRequestsList));
     }
@@ -146,9 +146,10 @@ class donationRequestController extends Controller
                 ),
                 'text/html'
             );
-
         $this->get('mailer')->send($message);
-        $donationRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '4' ));
+
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_DONATION'));
+        $donationRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('donationRequest/admin.html.twig',array(
             'donationRequests' => $donationRequestsList));
     }

@@ -36,20 +36,18 @@ class specialRequestController extends Controller
             ->add('itemColor')
             ->add('itemSchool')
             ->add('itemMajor')
-            ->add('itemLength', TextType::class)
-            ->add('itemWidth', TextType::class)
-            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '80', 'rows' => '5','placeholder' => ''), ))
+            ->add('itemSize', TextType::class,  array('attr' => array('placeholder' => "Example : 5'8'' ")))
+            ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '70', 'rows' => '5','placeholder' => 'Please specify the condition of the item'), ))
             ->add('save', SubmitType::class, array('label' => 'Submit your donation request'))
             ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            # The "Special Request" status has an id = 1;
-            $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->find(1);
+            $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
             $specialRequest->setItemStatus($Status);
-            #$User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
-            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => 'kashkarim2'));
+            $User = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('username'  => $this->getUser()));
             $specialRequest->setUser($User);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($specialRequest);
             $em->flush();
@@ -90,7 +88,8 @@ class specialRequestController extends Controller
      */
     public function adminAction(Request $request)
     {
-        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
+        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList
         ));
@@ -98,13 +97,13 @@ class specialRequestController extends Controller
 
 
     /**
-     * @Route("/admin/special_request/status/{inventoryRequest}/{newStatus}", name="acceptSpecialRequest")
+     * @Route("/admin/special_request/status/{inventoryRequest}", name="acceptSpecialRequest")
      */
-    public function adminChangeStatusAction(Request $request, $inventoryRequest,  $newStatus)
+    public function adminChangeStatusAction(Request $request, $inventoryRequest)
     {
         $em = $this->getDoctrine()->getManager();
         $record = $em->getRepository('AppBundle:Inventory')->find($inventoryRequest);
-        $Status = $em->getRepository('AppBundle:Status')->find($newStatus);
+        $Status = $em->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_ARRIVAL'));
         $record->setItemStatus($Status);
         $em->flush();
 
@@ -120,7 +119,8 @@ class specialRequestController extends Controller
             );
         $this->get('mailer')->send($message);
 
-        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
+        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList));
     }
@@ -146,9 +146,10 @@ class specialRequestController extends Controller
                 ),
                 'text/html'
             );
-
         $this->get('mailer')->send($message);
-        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => '1' ));
+
+        $Status = $this->getDoctrine()->getRepository('AppBundle:Status')->findOneBy(array('name'  => 'PENDING_SPECIAL'));
+        $specialRequestsList = $this->getDoctrine()->getRepository('AppBundle:Inventory')->findBy(array('itemStatus' => $Status ));
         return $this->render('specialRequest/admin.html.twig',array(
             'specialRequests' => $specialRequestsList));
     }

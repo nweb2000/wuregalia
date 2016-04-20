@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Here are the donation requests submitted to the system :</h2>
+    <h2> Donation requests submitted to the system :</h2>
     <br>
     <table border="1" >
         <tr>
@@ -14,8 +14,7 @@
             <td>School</td>
             <td>Major</td>
             <td>Description</td>
-            <td>Length</td>
-            <td>Width</td>
+            <td>Size</td>
             <td>Accept</td>
             <td>Reject</td>
 
@@ -32,9 +31,8 @@
                 <td>{{ donationRequest.itemSchool }}</td>
                 <td>{{ donationRequest.itemMajor }}</td>
                 <td>{{ donationRequest.itemDescription }}</td>
-                <td>{{ donationRequest.itemlength }}</td>
-                <td>{{ donationRequest.itemWidth }}</td>
-                <td> <a href="{{ path('acceptDonationRequest', { 'inventoryRequest': donationRequest.id , 'newStatus' : 2 })}}">Accept</a> </td>
+                <td>{{ donationRequest.itemSize }}</td>
+                <td> <a href="{{ path('acceptDonationRequest', { 'inventoryRequest': donationRequest.id })}}">Accept</a> </td>
                 <td> <a href="{{ path('rejectDonationRequest', { 'inventoryRequest': donationRequest.id })}}">Reject</a> </td>
 
             </tr>
