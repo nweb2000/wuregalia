@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Inventory;
+use AppBundle\Entity\Reservation;
+use AppBundle\Form\InventoryType;
 
  class DefaultController extends Controller
  {
@@ -16,24 +18,42 @@ use AppBundle\Entity\Inventory;
      public function indexAction(Request $request)
      {
          //getting the entity manganer as $em
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        //$inventories = $em->getRepository('AppBundle:Inventory')->find();
-
-        $inventories = $em->getRepository('AppBundle:Inventory');
-        //Query builder
-        $query = $inventories->createQueryBuilder('i')
-            ->where('i.status_id = :status')
-            ->setParameter('status', 'Available')
-            ->getQuery();
-
-        // $inventories = $em->getRepository('AppBundle:Inventory')
-        //     ->findAll();
-
-        // $itemStatusName = $inventories->getItemStatus()->getName();
+        $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
+        $inventories = $em->getRepository('AppBundle:Inventory')->findByItemStatus($avalStatus->getId());
 
         return $this->render('default/index.html.twig', array(
-            'inventories' => $inventories,
+            'inventories' => $inventories
         ));
      }
+
+    /**
+     * Filter availItems by filter
+     *
+     * @Route("/filter/{filter}", name="inventory_filter")
+     * @Method("GET")
+     *
+     */
+     public function filterAction(Request $request)
+     {
+        $em = $this->getDoctrine()->getManager();
+        $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
+        $inventories = $em->getRepository('AppBundle:Inventory')->findByItemStatus($avalStatus->getId());
+
+        $returnItems = null;
+
+        foreach ($inventories as $inventory)
+        {
+            if ($inventory->getItemType() == $request)
+            {
+                $returnItems += $inventory;
+            }
+        }
+
+        return $this->render('default/index.html.twig', array (
+            'inventories' => $returnItems
+        ));
+     }
+
  }

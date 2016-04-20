@@ -26,12 +26,14 @@ class InventoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $inventories = $em->getRepository('AppBundle:Inventory')->findAll();
+        $avalStatus = $em->getRepository('AppBundle:Status')->findOneByName('AVAL'); //place whatever you available status name is here
+        $inventories = $em->getRepository('AppBundle:Inventory')->findByItemStatus($avalStatus->getId());
 
         return $this->render('inventory/index.html.twig', array(
-            'inventories' => $inventories,
+            'inventories' => $inventories
         ));
     }
+
 
     /**
      * Creates a new Inventory entity.

@@ -1,38 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block header %}
 
+
+{% block body %}
 {# Filter form implementation #}
-<div class="container">
-  <form class="form-inline" action="{{ path('homepage') }}">
-    <div class="form-group">
-      <label>Filter</label>
-      <input class="form-control" type="checkbox-inline" name="filter">Cap
-      <input class="form-control" type="checkbox-inline" name="filter">Gown
-      <input class="form-control" type="checkbox-inline" name="filter">Hood
-      <input class="form-control" type="checkbox-inline" name="filter">Tassle
-    </div>
-  </form>
-</div>
+<form action="#">
+  <div class="form-group">
 
-<p>Hello World!</p>
+  </div>
+</form>
 
-<div class="row">
-    {% for inventory in inventories %}
-      <div class="col-sm-6 col-md-4 offset-3">
-        <div class="thumbnail">
-          <img src="..." alt="...">
-          <div class="caption">
-            <h3>{{ inventory.itemType }}</h3>
-            <p>{{ inventory.itemDescription }}</p>
-            <p>
-                <a href="{{ path('inventory_show', { 'id': inventory.id }) }}" class="btn btn-primary" role="button">View</a>
-                <a href="{{ path('rent', {'id': inventory.id}) }}" class="btn btn-default" role="button">Rent</a>
-            </p>
+<div class="jumbotron">
+  <div class="container">
+    <div class="card-deck-wrapper">
+      <div class="card-deck">
+        <div class="card">
+          <img class="card-img-top img-responsive center-block" src="{{ asset('Images/gown.jpg') }}" alt="Card image cap">
+          <div class="card-block">
+            <h4 class="card-title text-xs-center">GOWN</h4>
+            <p class="card-text text-xs-center">Click View to see all Regalia Gowns in the closet</p>
+            <a href="{{ path('inventory_filter', {'filter' : "Gown"}) }}" class="btn btn-info-outline center-block">View</a>
+          </div>
+        </div>
+        <div class="card">
+          <br>
+          <img class="card-img-top img-responsive center-block" src="{{ asset('Images/cap.jpg') }}" alt="Card image cap">
+          <br>
+          <br>
+          <div class="card-block">
+            <h4 class="card-title text-xs-center">CAP</h4>
+            <p class="card-text text-xs-center">Click View to see all Regalia Caps in the closet</p>
+            <a href="{{ path('inventory_filter', {'filter' : "Cap"}) }}" class="btn btn-info-outline center-block">View</a>
+          </div>
+        </div>
+        <div class="card">
+          <img class="card-img-top img-responsive center-block" src="{{ asset('Images/hood.jpg') }}" alt="Card image cap">
+          <div class="card-block">
+            <h4 class="card-title text-xs-center">HOOD</h4>
+            <p class="card-text text-xs-center">Click View to see all Regalia Hoods in the closet</p>
+            <a href="{{ path('inventory_filter', {'filter' : "Hood"}) }}" class="btn btn-info-outline center-block">View</a>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Item Type</th>
+      <th>Item Description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for inventory in inventories %}
+      <tr>
+        <th scope="row">{{inventory.itemType}}</th>
+        <td>{{inventory.itemDescription}}</td>
+        <td><a href="{{ path('rent_item', { 'id': inventory.id }) }}" class="btn btn-primary-outline" role="button">Rent</a></td>
+      </tr>
     {% endfor %}
+  </tbody>
+</table>
 </div>
 
 
