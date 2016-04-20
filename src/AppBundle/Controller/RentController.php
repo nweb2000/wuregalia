@@ -87,6 +87,7 @@ class RentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
+            $admin = $this->container->getParameter('app.admin');
 
             //send confirmation email to user
             $message = \Swift_Message::newInstance()
@@ -96,7 +97,7 @@ class RentController extends Controller
                 ->setBody(
                     $this->renderView(
                         'emailsNotifications/rent/user_confirm.txt.twig',
-                            array('item' => $item, 'user' => $user)), 'text/html');
+                            array('item' => $item, 'user' => $user, 'duedate' => $reservation->getDueDate()->format('n-j-Y'), 'admin' => $admin)), 'text/html');
                             $this->get('mailer')->send($message);
 
             return $this->render('rent/rent.html.twig', array(

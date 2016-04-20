@@ -60,20 +60,39 @@ class ReservationController extends Controller
     }
 
     /**
-     * Finds and displays a Reservation entity.
+     * Send an email notification to all users with overdue rentals
      *
-     * @Route("/{id}", name="reservation_show")
-     * @Method("GET")
+     * @Route("/notify", name="reservation_notify")
      */
-    public function showAction(Reservation $reservation)
-    {
-        $deleteForm = $this->createDeleteForm($reservation);
 
-        return $this->render('reservation/show.html.twig', array(
-            'reservation' => $reservation,
-            'delete_form' => $deleteForm->createView(),
-        ));
+    public function notifyAction() 
+    {
+       //send confirmation email to user
+        
+        $em = $this->getDoctrine()->getManager();
+        $reservations = $em->getRepository('AppBundle:Reservation')->findAll();
+        foreach($reservations as $reservation) 
+        {
+            if($reservation->isLate()) 
+            {
+                $user = $reservation->getUserid();
+                $item = $reservation->getItem();
+                $admin = $this->container->getParameter('app.admin');
+                $message = \Swift_Message::newInstance()
+                ->setSubject('Overdue Rental')
+                ->setFrom('wuregalia@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'emailsNotifications/rent/overdue_notify.txt.twig',
+                            array('item' => $item, 'user' => $user, 'admin' => $admin)), 'text/html');
+                            $this->get('mailer')->send($message); 
+                }
+        }
+        return $this->redirectToRoute('reservation_index');
     }
+
+
 
     /**
      * Displays a form to edit an existing Reservation entity.
@@ -106,24 +125,18 @@ class ReservationController extends Controller
      * Deletes a Reservation entity and set its item to available
      *
      * @Route("/{id}", name="reservation_delete")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, Reservation $reservation)
     {
-        $form = $this->createDeleteForm($reservation);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $status = $em->getRepository('AppBundle:Status')->findOneByName('AVAL');  //set the status to AVAL
-            $reservation->getItem()->setItemStatus($status);
-            $em->remove($reservation);
-            $em->flush();
-        }
+        $em = $this->getDoctrine()->getManager();
+        $status = $em->getRepository('AppBundle:Status')->findOneByName('AVAL');  //set the status to AVAL
+        $reservation->getItem()->setItemStatus($status);
+        $em->remove($reservation);
+        $em->flush();
 
         return $this->redirectToRoute('reservation_index');
     }
+
 
     /**
      * Creates a form to delete a Reservation entity.

@@ -16,8 +16,7 @@ class InventoryType extends AbstractType
     {
         $builder
             ->add('itemDescription')
-            ->add('itemLength')
-            ->add('itemWidth')
+            ->add('itemSize')
             ->add('itemStatus')
             ->add('itemType')
             ->add('itemColor')

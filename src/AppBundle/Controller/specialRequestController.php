@@ -58,23 +58,24 @@ class specialRequestController extends Controller
             $em->flush();
 
             // send a notification email to the admin
-            $message = \Swift_Message::newInstance()
+            /*$message = \Swift_Message::newInstance()
                 ->setSubject('New Special Request Submitted to WU Regalia Closet')
                 ->setFrom('wuregalia@gmail.com')
-                ->setTo('wuregalia@gmail.com')
+                ->setTo(admin email address goes here)
                 ->setBody(
                     $this->renderView(
                         'emailsNotifications/specialRequest/adminNewSpecialRequest.txt.twig', array('specialRequest' => $specialRequest)
                     ),
                     'text/html'
                 );
-            $this->get('mailer')->send($message);
+            $this->get('mailer')->send($message);*/
 
-            // send a confirmation email to the admin
+            // send a confirmation email to the user
+            $user = $this->getUser();
             $message = \Swift_Message::newInstance()
                 ->setSubject('Special Request Confirmation')
                 ->setFrom('wuregalia@gmail.com')
-                ->setTo('wuregalia@gmail.com')
+                ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
                         'emailsNotifications/specialRequest/userSpecialRequestReceived.txt.twig', array('specialRequest' => $specialRequest)
@@ -105,7 +106,6 @@ class specialRequestController extends Controller
         ));
     }
 
-
     /**
      * @Route("/admin/special_request/status/{inventoryRequest}", name="acceptSpecialRequest")
      */
@@ -118,11 +118,12 @@ class specialRequestController extends Controller
         $record->setItemStatus($Status);
         $em->flush();
 
+        $user = $this->getUser();
         // send an email to the user to let him/her know that the request has been accepted
         $message = \Swift_Message::newInstance()
             ->setSubject('Special Request Accepted')
             ->setFrom('wuregalia@gmail.com')
-            ->setTo('wuregalia@gmail.com')
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
                     'emailsNotifications/specialRequest/userSpecialRequestAccepted.txt.twig', array('specialRequest' => $record)
@@ -150,11 +151,12 @@ class specialRequestController extends Controller
         $em->remove($record);
         $em->flush();
 
+        $user = $this->getUser();
         // send an email to the user to let him/her know that the request has been rejected
         $message = \Swift_Message::newInstance()
             ->setSubject('Special Request Rejected')
             ->setFrom('wuregalia@gmail.com')
-            ->setTo('wuregalia@gmail.com')
+            ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
                     'emailsNotifications/specialRequest/userSpecialRequestRejected.txt.twig', array('specialRequest' => $record)
