@@ -28,7 +28,7 @@ use AppBundle\Entity\Reservation;
 class ReportsController extends Controller
 {
     /**
-     * @Route("/reports", name="reports")
+     * @Route("/admin/reports", name="reports")
      * displays list of possible reports
      */
     public function indexAction(Request $request)

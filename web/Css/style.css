@@ -1,60 +1,16 @@
-
-
-nav {
-	/*background-color: #4b9cc9;*/
-	/*color:#f2f2f2;*/
+.search-icon{
+        border-color: transparent;
+        background-color: transparent;
 }
 
-ul {
-	list-style-type: none;
+header {
+        backgroud-color: #C6D2E1;
 }
 
-
-
-li {
-	display:inline;
-	font-size: 20px;
-	/*margin: 0 0 0 20px;*/
+footer {
+        background-color:#FFEEBB;
 }
 
-a {
-	text-decoration: none;
-	color:#f2f2f2;
-	transition: .3s;
-}
-
-a:hover #Homepage {
-	color:#f2f2f2;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-#Heading {
-	/*color:#0071BC*/
-}
-
-#PasswordField {
-	/*padding: 0 0 0 5px;*/
-}
-
-/*footer {*/
-/*	background-color: #4b9cc9;*/
-/*	color:#f2f2f2;*/
-	/*margin: 200px 0 0 0;*/
-	/*padding: 16px 0 0 0;*/
-/*}*/
-
-/*#ContentColumns {*/
-/*	margin:20px 0 0 0;*/
-/*}*/
-
-h3 {
-	color: #4b9cc9;
-}
-
-
-.Content {
-	/*margin:20px 0 0 0;*/
+footer .row {
+        padding-top:2%;
 }

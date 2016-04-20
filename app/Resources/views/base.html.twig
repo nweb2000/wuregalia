@@ -30,7 +30,7 @@
                       <a class=" pull-xs-right" href="{{ path('account_index') }}">{{ app.user.Fname }}</a>
                       <a href="/logout" type="button" class="btn btn-primary-outline pull-xs-right">Logout</a>
                     {% elseif not app.user %}
-                    <form class="form-inline pull-xs-right">
+                    <form class="form-inline pull-xs-right" action="/login" method="post">
                       <div class="form-group">
                         <input class="form-control" type="text" placeholder="smithj2" id="username" name="_username"/>
                       </div>

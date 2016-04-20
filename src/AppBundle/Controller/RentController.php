@@ -22,7 +22,7 @@ use AppBundle\Form\InventoryType;
 class RentController extends Controller
 {
     /**
-     * @Route("/", name="rent")
+     * @Route("/admin", name="rent")
      * @Method("GET")
      */
 

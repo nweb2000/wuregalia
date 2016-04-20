@@ -12,7 +12,7 @@ use AppBundle\Form\ItemTypeType;
 /**
  * ItemType controller.
  *
- * @Route("/itemtype")
+ * @Route("/admin/itemtype")
  */
 class ItemTypeController extends Controller
 {

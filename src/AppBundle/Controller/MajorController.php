@@ -12,7 +12,7 @@ use AppBundle\Form\MajorType;
 /**
  * Major controller.
  *
- * @Route("/major")
+ * @Route("/admin/major")
  */
 class MajorController extends Controller
 {

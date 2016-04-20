@@ -12,7 +12,7 @@ use AppBundle\Form\InventoryType;
 /**
  * Inventory controller.
  *
- * @Route("/inv")
+ * @Route("/admin/inv")
  */
 class InventoryController extends Controller
 {
