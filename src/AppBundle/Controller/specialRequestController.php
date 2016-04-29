@@ -38,7 +38,7 @@ class specialRequestController extends Controller
             ->add('itemMajor')
             ->add('itemSize', TextType::class,  array('attr' => array('placeholder' => "Example : 5'8'' ")))
             ->add('itemDescription',TextareaType::class , array('attr' => array('cols' => '70', 'rows' => '5','placeholder' => 'Please specify the condition of the item'), ))
-            ->add('save', SubmitType::class, array('label' => 'Submit your donation request'))
+            ->add('save', SubmitType::class, array('label' => 'Submit your special request'))
             ->getForm();
         $form->handleRequest($request);
 
